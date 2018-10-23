@@ -241,6 +241,154 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/23/iOS字体适配方案/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LiuXiao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/blackCat.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HotCatLX Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/23/iOS字体适配方案/" itemprop="url">iOS字体适配方案</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-23T14:17:53+08:00">
+                2018-10-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h4 id="1-结构梳理"><a href="#1-结构梳理" class="headerlink" title="1.  结构梳理"></a>1.  结构梳理</h4><ul>
+<li><strong>字体适配相关概念</strong><ol>
+<li>现有机型的物理尺寸和分辨率数据</li>
+<li>适配方案整理</li>
+</ol>
+</li>
+<li><p><strong>适配方案</strong></p>
+<ul>
+<li>根据机型和屏幕尺寸等比缩放</li>
+<li>runtime : 方法替换</li>
+<li>runtime : Method Swizzling</li>
+</ul>
+<p><img src="http://pgom4x3el.bkt.clouddn.com/Snip20181023_49.png" alt="结构梳理"></p>
+</li>
+</ul>
+<h4 id="2-相关文章"><a href="#2-相关文章" class="headerlink" title="2. 相关文章"></a>2. 相关文章</h4><ul>
+<li><a href="https://www.jianshu.com/p/8b8731ed84f8" target="_blank" rel="noopener">奋斗的七月 《iOS字体适配的三种实现方法》</a></li>
+<li><a href="https://www.jianshu.com/p/7a6106f952d3" target="_blank" rel="noopener">深蓝_S 《iOS字体大小适配的几种方法》</a></li>
+</ul>
+<h4 id="3-字体适配概念"><a href="#3-字体适配概念" class="headerlink" title="3.字体适配概念"></a>3.字体适配概念</h4><h5 id="3-1-现有机型的物理尺寸图和分辨率数据"><a href="#3-1-现有机型的物理尺寸图和分辨率数据" class="headerlink" title="3.1 现有机型的物理尺寸图和分辨率数据"></a>3.1 现有机型的物理尺寸图和分辨率数据</h5><p>&emsp;&emsp;在iPhone X, iPhone XS, iPhone XR出来之前,iPhone适配只需要两套图@2x &amp; @3x 两套图,在新的5.8 ,6.1, 6.5即将要出来之前大家都在猜测是不是要出新的@4x来适配了?但是尺寸数据出来之后大家都松了口气.</p>
+<ul>
+<li>之前我们以750x1334px（375x667pt）为基础设计页面，得到750尺寸切图即@2x，本套适配适用于iPhone6-7-8-XR</li>
+<li>1242x2208px版本切图即@3x,这套切图适用于iPhone Plus-X-XSM-XS</li>
+<li>一般情况下iPhoneX使用Plus分辨率切图即可。Plus分辨率为2208x1242px</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/10/23/iOS字体适配方案/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/15/在嘉兴的九月和十月/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -404,7 +552,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -412,6 +560,15 @@
 
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
             
 
           </nav>
