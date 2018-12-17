@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="1.Dispatch I/O 简单介绍 在《iOS和OSX多线程和内存管理》上看到Dispatch I/O的介绍,介绍了一个简单应用就是日至API中使用到了这个技术 日至输出源码 想在网上找一些应用的介绍和详细使用,很可惜没找到什么有用的,很多都是把书中内容拷贝了一遍,实际使用和一些参数的使用并没有涉及 文章只是涉及了文件本地读取,文件的远程读取&amp;amp;写入,会在后续的文章中更新 应用1 : 串">
+<meta name="description" content="1.Dispatch I/O 简单介绍 在《iOS和OSX多线程和内存管理》上看到Dispatch I/O的介绍,介绍了一个简单应用就是日至API中使用到了这个技术 日至输出源码 想在网上找一些应用的介绍和详细使用,很可惜没找到什么有用的,很多都是把书中内容拷贝了一遍,实际使用和一些参数的使用并没有涉及 文章只是涉及了文件本地读取,文件的远程读取&amp;amp;写入,会在后续的文章中更新 应用1 :">
 <meta name="keywords" content="Study &amp; Life">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dispatch I&#x2F;O 本地读取">
 <meta property="og:url" content="http://yoursite.com/2018/12/17/Dispatch I:O 本地读取/index.html">
 <meta property="og:site_name" content="HotCatLX Blog">
-<meta property="og:description" content="1.Dispatch I/O 简单介绍 在《iOS和OSX多线程和内存管理》上看到Dispatch I/O的介绍,介绍了一个简单应用就是日至API中使用到了这个技术 日至输出源码 想在网上找一些应用的介绍和详细使用,很可惜没找到什么有用的,很多都是把书中内容拷贝了一遍,实际使用和一些参数的使用并没有涉及 文章只是涉及了文件本地读取,文件的远程读取&amp;amp;写入,会在后续的文章中更新 应用1 : 串">
+<meta property="og:description" content="1.Dispatch I/O 简单介绍 在《iOS和OSX多线程和内存管理》上看到Dispatch I/O的介绍,介绍了一个简单应用就是日至API中使用到了这个技术 日至输出源码 想在网上找一些应用的介绍和详细使用,很可惜没找到什么有用的,很多都是把书中内容拷贝了一遍,实际使用和一些参数的使用并没有涉及 文章只是涉及了文件本地读取,文件的远程读取&amp;amp;写入,会在后续的文章中更新 应用1 :">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-17T14:28:19.591Z">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/sad_soul-wallpaper-1920x1080.jpg?q-sign-algorithm=sha1&q-ak=AKIDmdI1Ext3998S4SZd7NOIaz3R8Zhumljp&q-sign-time=1545058045;1545059845&q-key-time=1545058045;1545059845&q-header-list=&q-url-param-list=&q-signature=e0c8bf041107ab8dbc175cf8e80c3733d1056533&x-cos-security-token=dd9564c11515528360fea87a5a35f1e05131dbe510001">
+<meta property="og:updated_time" content="2018-12-17T14:49:35.286Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dispatch I&#x2F;O 本地读取">
-<meta name="twitter:description" content="1.Dispatch I/O 简单介绍 在《iOS和OSX多线程和内存管理》上看到Dispatch I/O的介绍,介绍了一个简单应用就是日至API中使用到了这个技术 日至输出源码 想在网上找一些应用的介绍和详细使用,很可惜没找到什么有用的,很多都是把书中内容拷贝了一遍,实际使用和一些参数的使用并没有涉及 文章只是涉及了文件本地读取,文件的远程读取&amp;amp;写入,会在后续的文章中更新 应用1 : 串">
+<meta name="twitter:description" content="1.Dispatch I/O 简单介绍 在《iOS和OSX多线程和内存管理》上看到Dispatch I/O的介绍,介绍了一个简单应用就是日至API中使用到了这个技术 日至输出源码 想在网上找一些应用的介绍和详细使用,很可惜没找到什么有用的,很多都是把书中内容拷贝了一遍,实际使用和一些参数的使用并没有涉及 文章只是涉及了文件本地读取,文件的远程读取&amp;amp;写入,会在后续的文章中更新 应用1 :">
+<meta name="twitter:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/sad_soul-wallpaper-1920x1080.jpg?q-sign-algorithm=sha1&q-ak=AKIDmdI1Ext3998S4SZd7NOIaz3R8Zhumljp&q-sign-time=1545058045;1545059845&q-key-time=1545058045;1545059845&q-header-list=&q-url-param-list=&q-signature=e0c8bf041107ab8dbc175cf8e80c3733d1056533&x-cos-security-token=dd9564c11515528360fea87a5a35f1e05131dbe510001">
 
 
 
@@ -310,7 +312,8 @@
       
 
       
-        <h3 id="1-Dispatch-I-O-简单介绍"><a href="#1-Dispatch-I-O-简单介绍" class="headerlink" title="1.Dispatch I/O 简单介绍"></a>1.Dispatch I/O 简单介绍</h3><ul>
+        <p><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/sad_soul-wallpaper-1920x1080.jpg?q-sign-algorithm=sha1&amp;q-ak=AKIDmdI1Ext3998S4SZd7NOIaz3R8Zhumljp&amp;q-sign-time=1545058045;1545059845&amp;q-key-time=1545058045;1545059845&amp;q-header-list=&amp;q-url-param-list=&amp;q-signature=e0c8bf041107ab8dbc175cf8e80c3733d1056533&amp;x-cos-security-token=dd9564c11515528360fea87a5a35f1e05131dbe510001" alt="black"></p>
+<h3 id="1-Dispatch-I-O-简单介绍"><a href="#1-Dispatch-I-O-简单介绍" class="headerlink" title="1.Dispatch I/O 简单介绍"></a>1.Dispatch I/O 简单介绍</h3><ul>
 <li>在《iOS和OSX多线程和内存管理》上看到Dispatch I/O的介绍,介绍了一个简单应用就是日至API中使用到了这个技术</li>
 <li><a href="https://github.com/Apple-FOSS-Mirror/Libc/blob/2ca2ae74647714acfc18674c3114b1a5d3325d7d/gen/asl.c" target="_blank" rel="noopener">日至输出源码</a></li>
 <li>想在网上找一些应用的介绍和详细使用,很可惜没找到什么有用的,很多都是把书中内容拷贝了一遍,实际使用和一些参数的使用并没有涉及</li>
@@ -367,6 +370,9 @@
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">	typedef int dispatch_fd_t;</span><br><span class="line"></span><br><span class="line"> 	* Native file descriptor type for the platform.//平台原生文件描述类型有不同模式</span><br><span class="line"></span><br><span class="line"> 	#define	O_RDONLY	0x0000		/* 只读 , open for reading only */</span><br><span class="line">#define	O_WRONLY	0x0001		/* 只写, open for writing only */</span><br><span class="line">#define	O_RDWR		0x0002		/* 读写, open for reading and writing */</span><br><span class="line">#define	O_ACCMODE	0x0003		/* 全部mode mask for above modes */</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<h4 id="4-end"><a href="#4-end" class="headerlink" title="4. end"></a>4. end</h4><blockquote>
+<p>最近很喜欢听相声,睡觉前听,写代码听,骑车也在听,感觉德云社的相声全部都听了一遍差不多</p>
+</blockquote>
 
       
     </div>
@@ -517,7 +523,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Dispatch-I-O-简单介绍"><span class="nav-number">1.</span> <span class="nav-text">1.Dispatch I/O 简单介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-串行异步读取本地文件"><span class="nav-number">2.</span> <span class="nav-text">2. 串行异步读取本地文件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-代码"><span class="nav-number">2.0.1.</span> <span class="nav-text">2.1 代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-参数解析"><span class="nav-number">3.</span> <span class="nav-text">2.2 参数解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-并发异步读取本地文件"><span class="nav-number">4.</span> <span class="nav-text">3. 并发异步读取本地文件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-代码"><span class="nav-number">4.0.1.</span> <span class="nav-text">3.1 代码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-解析"><span class="nav-number">4.0.2.</span> <span class="nav-text">3.2 解析</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Dispatch-I-O-简单介绍"><span class="nav-number">1.</span> <span class="nav-text">1.Dispatch I/O 简单介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-串行异步读取本地文件"><span class="nav-number">2.</span> <span class="nav-text">2. 串行异步读取本地文件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-代码"><span class="nav-number">2.0.1.</span> <span class="nav-text">2.1 代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-参数解析"><span class="nav-number">3.</span> <span class="nav-text">2.2 参数解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-并发异步读取本地文件"><span class="nav-number">4.</span> <span class="nav-text">3. 并发异步读取本地文件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-代码"><span class="nav-number">4.0.1.</span> <span class="nav-text">3.1 代码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-解析"><span class="nav-number">4.0.2.</span> <span class="nav-text">3.2 解析</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-end"><span class="nav-number">4.1.</span> <span class="nav-text">4. end</span></a></li></ol></li></ol></div>
             
 
           </div>
