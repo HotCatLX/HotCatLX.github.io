@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="An iOS programmer, a blog chronicling the life and learning process, content with learning , think , life snippets , cats and you">
+<meta name="description" content="1.Dispatch I/O 简单介绍 在《iOS和OSX多线程和内存管理》上看到Dispatch I/O的介绍,介绍了一个简单应用就是日至API中使用到了这个技术 日至输出源码 想在网上找一些应用的介绍和详细使用,很可惜没找到什么有用的,很多都是把书中内容拷贝了一遍,实际使用和一些参数的使用并没有涉及 文章只是涉及了文件本地读取,文件的远程读取&amp;amp;写入,会在后续的文章中更新 应用1 : 串">
 <meta name="keywords" content="Study &amp; Life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="HotCatLX Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dispatch I&#x2F;O 本地读取">
+<meta property="og:url" content="http://yoursite.com/2018/12/17/GCD-I-O-本地读取/index.html">
 <meta property="og:site_name" content="HotCatLX Blog">
-<meta property="og:description" content="An iOS programmer, a blog chronicling the life and learning process, content with learning , think , life snippets , cats and you">
+<meta property="og:description" content="1.Dispatch I/O 简单介绍 在《iOS和OSX多线程和内存管理》上看到Dispatch I/O的介绍,介绍了一个简单应用就是日至API中使用到了这个技术 日至输出源码 想在网上找一些应用的介绍和详细使用,很可惜没找到什么有用的,很多都是把书中内容拷贝了一遍,实际使用和一些参数的使用并没有涉及 文章只是涉及了文件本地读取,文件的远程读取&amp;amp;写入,会在后续的文章中更新 应用1 : 串">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-17T14:28:19.591Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HotCatLX Blog">
-<meta name="twitter:description" content="An iOS programmer, a blog chronicling the life and learning process, content with learning , think , life snippets , cats and you">
+<meta name="twitter:title" content="Dispatch I&#x2F;O 本地读取">
+<meta name="twitter:description" content="1.Dispatch I/O 简单介绍 在《iOS和OSX多线程和内存管理》上看到Dispatch I/O的介绍,介绍了一个简单应用就是日至API中使用到了这个技术 日至输出源码 想在网上找一些应用的介绍和详细使用,很可惜没找到什么有用的,很多都是把书中内容拷贝了一遍,实际使用和一些参数的使用并没有涉及 文章只是涉及了文件本地读取,文件的远程读取&amp;amp;写入,会在后续的文章中更新 应用1 : 串">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/12/17/GCD-I-O-本地读取/"/>
 
 
 
 
 
-  <title>HotCatLX Blog</title>
+  <title>Dispatch I/O 本地读取 | HotCatLX Blog</title>
   
 
 
@@ -144,8 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -228,9 +228,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -260,9 +260,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/17/GCD-I-O-本地读取/" itemprop="url">Dispatch I/O 本地读取</a></h1>
+          <h1 class="post-title" itemprop="name headline">Dispatch I/O 本地读取</h1>
         
 
         <div class="post-meta">
@@ -312,9 +310,7 @@
       
 
       
-        
-          
-            <h3 id="1-Dispatch-I-O-简单介绍"><a href="#1-Dispatch-I-O-简单介绍" class="headerlink" title="1.Dispatch I/O 简单介绍"></a>1.Dispatch I/O 简单介绍</h3><ul>
+        <h3 id="1-Dispatch-I-O-简单介绍"><a href="#1-Dispatch-I-O-简单介绍" class="headerlink" title="1.Dispatch I/O 简单介绍"></a>1.Dispatch I/O 简单介绍</h3><ul>
 <li>在《iOS和OSX多线程和内存管理》上看到Dispatch I/O的介绍,介绍了一个简单应用就是日至API中使用到了这个技术</li>
 <li><a href="https://github.com/Apple-FOSS-Mirror/Libc/blob/2ca2ae74647714acfc18674c3114b1a5d3325d7d/gen/asl.c" target="_blank" rel="noopener">日至输出源码</a></li>
 <li>想在网上找一些应用的介绍和详细使用,很可惜没找到什么有用的,很多都是把书中内容拷贝了一遍,实际使用和一些参数的使用并没有涉及</li>
@@ -372,8 +368,6 @@
 </li>
 </ul>
 
-          
-        
       
     </div>
     
@@ -390,160 +384,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/23/iOS字体适配方案/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LiuXiao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/blackCat.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HotCatLX Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/23/iOS字体适配方案/" itemprop="url">iOS字体适配方案</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-23T14:17:53+08:00">
-                2018-10-23
-              </time>
+              <a href="/2018/10/23/iOS字体适配方案/" rel="next" title="iOS字体适配方案">
+                <i class="fa fa-chevron-left"></i> iOS字体适配方案
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <h4 id="1-结构梳理"><a href="#1-结构梳理" class="headerlink" title="1.  结构梳理"></a>1.  结构梳理</h4><ul>
-<li><strong>字体适配相关概念</strong><ol>
-<li>现有机型的物理尺寸和分辨率数据</li>
-<li>适配方案整理</li>
-</ol>
-</li>
-<li><p><strong>适配方案</strong></p>
-<ul>
-<li>根据机型和屏幕尺寸等比缩放</li>
-<li>runtime : 方法替换</li>
-<li>runtime : Method Swizzling</li>
-</ul>
-<p><img src="http://pgom4x3el.bkt.clouddn.com/Snip20181023_49.png" alt="结构梳理"></p>
-</li>
-</ul>
-<h4 id="2-相关文章"><a href="#2-相关文章" class="headerlink" title="2. 相关文章"></a>2. 相关文章</h4><ul>
-<li><a href="https://www.jianshu.com/p/8b8731ed84f8" target="_blank" rel="noopener">奋斗的七月 《iOS字体适配的三种实现方法》</a></li>
-<li><a href="https://www.jianshu.com/p/7a6106f952d3" target="_blank" rel="noopener">深蓝_S 《iOS字体大小适配的几种方法》</a></li>
-</ul>
-<h4 id="3-字体适配概念"><a href="#3-字体适配概念" class="headerlink" title="3.字体适配概念"></a>3.字体适配概念</h4><h5 id="3-1-现有机型的物理尺寸图和分辨率数据"><a href="#3-1-现有机型的物理尺寸图和分辨率数据" class="headerlink" title="3.1 现有机型的物理尺寸图和分辨率数据"></a>3.1 现有机型的物理尺寸图和分辨率数据</h5><p>&emsp;&emsp;在iPhone X, iPhone XS, iPhone XR出来之前,iPhone适配只需要两套图@2x &amp; @3x 两套图,在新的5.8 ,6.1, 6.5即将要出来之前大家都在猜测是不是要出新的@4x来适配了?但是尺寸数据出来之后大家都松了口气.</p>
-<ul>
-<li>之前我们以750x1334px（375x667pt）为基础设计页面，得到750尺寸切图即@2x，本套适配适用于iPhone6-7-8-XR</li>
-<li>1242x2208px版本切图即@3x,这套切图适用于iPhone Plus-X-XSM-XS</li>
-<li>一般情况下iPhoneX使用Plus分辨率切图即可。Plus分辨率为2208x1242px</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/10/23/iOS字体适配方案/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -553,136 +415,11 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/15/在嘉兴的九月和十月/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LiuXiao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/blackCat.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HotCatLX Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/15/在嘉兴的九月和十月/" itemprop="url">在嘉兴的九月和十月</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-15T17:03:19+08:00">
-                2018-10-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="http://pgom4x3el.bkt.clouddn.com/hedi-alija-393665-unsplash.jpg" alt="autumn"></p>
-<p>&emsp;&emsp;&emsp;&emsp;没想到第一篇Blog就是记录自己的生活,而不是技术或者学习反思,貌似不是个程序猿的技术流的正常开头,但是也许我就不是一个彻彻底底的程序猿吧.以后我争取在每一篇的 <strong>top &amp; bottom</strong> 放两张<strong>我喜欢的照片和一首我此时正在听的歌</strong>,这有点意思,come back.  </p>
-<p>&emsp;&emsp;&emsp;&emsp;公司接了一个项目,8月底开始吧,就开始来嘉兴出差,开始只是来现场改改bug,以为很快v1.0发布了之后就能从这个项目抽身出来,结果一改再改就到了十月中旬,起初还好一个月两三次来嘉兴,从九月开始,基本保持一个月6天常驻嘉兴,经常一来就是3天,起初我对嘉兴的印象很好,消费低,节奏舒服,最重要很想家里的小县城的感觉,但是加班和持续的出差导致我现在谈嘉兴色变,也许这个项目做完了,再也不会想来嘉兴了.</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/10/15/在嘉兴的九月和十月/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -690,6 +427,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -710,8 +451,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -757,6 +507,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Dispatch-I-O-简单介绍"><span class="nav-number">1.</span> <span class="nav-text">1.Dispatch I/O 简单介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-串行异步读取本地文件"><span class="nav-number">2.</span> <span class="nav-text">2. 串行异步读取本地文件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-代码"><span class="nav-number">2.0.1.</span> <span class="nav-text">2.1 代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-参数解析"><span class="nav-number">3.</span> <span class="nav-text">2.2 参数解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-并发异步读取本地文件"><span class="nav-number">4.</span> <span class="nav-text">3. 并发异步读取本地文件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-代码"><span class="nav-number">4.0.1.</span> <span class="nav-text">3.1 代码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-解析"><span class="nav-number">4.0.2.</span> <span class="nav-text">3.2 解析</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -890,6 +656,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
