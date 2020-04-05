@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="An iOS programmer, a blog chronicling the life and learning process, content with learning , think , life snippets , cats and you">
+<meta name="description" content="0. 目的&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;作为一个非计算机专业毕业的,走在不断查漏补缺,扩大底层知识池的👨‍💻‍,有很多零碎的知识点.遇到总是忘记,或者比较零碎的点,会在这篇blog做一个整体梳理  主要内容 1. 原码,反码,补码 2. 有关字符 3. 数据类型及取值范围 4. 函数式编程">
 <meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="查漏补缺.md">
 <meta property="og:url" content="http://yoursite.com/2020/04/06/查漏补缺/index.html">
 <meta property="og:site_name" content="HotCatLX Blog">
-<meta property="og:description" content="An iOS programmer, a blog chronicling the life and learning process, content with learning , think , life snippets , cats and you">
+<meta property="og:description" content="0. 目的&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;作为一个非计算机专业毕业的,走在不断查漏补缺,扩大底层知识池的👨‍💻‍,有很多零碎的知识点.遇到总是忘记,或者比较零碎的点,会在这篇blog做一个整体梳理  主要内容 1. 原码,反码,补码 2. 有关字符 3. 数据类型及取值范围 4. 函数式编程">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-05T16:48:21.613Z">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA/cute_cat_3-wallpaper-1920x1200.jpg">
+<meta property="og:updated_time" content="2020-04-05T17:18:06.980Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="查漏补缺.md">
-<meta name="twitter:description" content="An iOS programmer, a blog chronicling the life and learning process, content with learning , think , life snippets , cats and you">
+<meta name="twitter:description" content="0. 目的&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;作为一个非计算机专业毕业的,走在不断查漏补缺,扩大底层知识池的👨‍💻‍,有很多零碎的知识点.遇到总是忘记,或者比较零碎的点,会在这篇blog做一个整体梳理  主要内容 1. 原码,反码,补码 2. 有关字符 3. 数据类型及取值范围 4. 函数式编程">
+<meta name="twitter:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA/cute_cat_3-wallpaper-1920x1200.jpg">
 
 
 
@@ -310,7 +312,149 @@
       
 
       
-        
+        <p><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA/cute_cat_3-wallpaper-1920x1200.jpg" alt=""></p>
+<h4 id="0-目的"><a href="#0-目的" class="headerlink" title="0. 目的"></a>0. 目的</h4><p>&emsp;&emsp;&emsp;&emsp;作为一个非计算机专业毕业的,走在不断查漏补缺,扩大底层知识池的👨‍💻‍,有很多零碎的知识点.遇到总是忘记,或者比较零碎的点,会在这篇blog做一个整体梳理</p>
+<ul>
+<li><strong>主要内容</strong><ul>
+<li><a href="#1">1. 原码,反码,补码</a></li>
+<li><a href="#2">2. 有关字符</a></li>
+<li><a href="#3">3. 数据类型及取值范围</a></li>
+<li><a href="#4">4. 函数式编程</a></li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<hr>
+<p></p><h4 id="1">1. 原码,反码,补码<p></p>
+<p>#### </p>
+<h5 id="1-Introduce"><a href="#1-Introduce" class="headerlink" title="1. Introduce"></a>1. Introduce</h5><ul>
+<li>字节: Byte, B </li>
+<li>其它存储单位<ul>
+<li>1字 = 2B(字的英文是word)</li>
+<li>1KB = 1024B (千字节)</li>
+<li>1MB = 1024KB (兆字节)</li>
+<li>1GB = 1024MB (千兆字节)</li>
+<li>1TB = 1024GB (太字节)</li>
+</ul>
+</li>
+<li><p>位,Bite</p>
+<ul>
+<li>计算机最小存储字节,每一个二进制存储0 or 1</li>
+<li>1个字节8位</li>
+</ul>
+</li>
+<li><p>有符号数的二进制表示方法</p>
+<ul>
+<li>原码</li>
+<li>补码</li>
+<li>反码</li>
+<li>均有符号位和数值位<ul>
+<li>符号位,最高位为符号位,0表示+,1表示-</li>
+<li>三种表示方法各不相同</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>原码</p>
+<ul>
+<li>最高位为符号位</li>
+<li>其余位: 数值的绝对值</li>
+</ul>
+</li>
+<li><p>反码</p>
+<ul>
+<li>正数的原码反码一样</li>
+<li>负数的反码,符号位不变,<strong>数值位按位取反,0为1,1为0</strong></li>
+</ul>
+</li>
+<li><p>补码</p>
+<ul>
+<li>正数的补码和原码一样</li>
+<li>负数的补码: <strong>反码的末位+1</strong></li>
+</ul>
+</li>
+<li><p><strong>计算机数值一律用补码来表示和存储</strong></p>
+</li>
+<li><p>大小端模式: 决定来了多字节数据的存储顺</p>
+<ul>
+<li>大端模式 : 高字节在低地址,低字节在高地址</li>
+<li>小端模式: 高字节在高地址,低字节在低地址</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p></p><h4 id="2">2. 有关字符<p></p>
+<p>#### </p>
+<ul>
+<li>每一个单字符都会被转化为整数值进行存储<ul>
+<li>a 对应整数97(ASCII值)</li>
+<li>A 对应整数65(ASCII值)</li>
+<li>a &amp; A间隔32</li>
+<li>0 对应整数48(ASCII值)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int i = &apos;a&apos;</span><br><span class="line">char c = 97</span><br><span class="line">//char 可以当做整数类型使用</span><br></pre></td></tr></table></figure>
+<ul>
+<li>转义序列<ul>
+<li>\nnn :任意八进制值</li>
+<li>\xnn :任意十六进制值</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p></p><h4 id="3">3. 数据类型及取值范围<p></p>
+<p>#### </p>
+<h4 id="3-1-无符号整数和有符号整数区别"><a href="#3-1-无符号整数和有符号整数区别" class="headerlink" title="3.1 无符号整数和有符号整数区别"></a>3.1 无符号整数和有符号整数区别</h4><ul>
+<li><p>区别</p>
+<ul>
+<li>有符号整数,最高位是符号位,其余位是数值位(补码)</li>
+<li>无符号整数,无符号位,所有数都是数值位</li>
+</ul>
+</li>
+<li><p>溢出相关</p>
+<ul>
+<li>少字节赋值给多字节的变量时: 其余位会补0</li>
+<li>取值范围内: <strong>最小值-1,得到最大值,最大值+1得到最小值</strong></li>
+</ul>
+</li>
+<li><p>几个有趣的溢出</p>
+</li>
+</ul>
+<hr>
+<p></p><h4 id="4">4. 函数式编程<p></p>
+<p>#### </p>
+<ul>
+<li>命令式编程 &amp; 函数式编程</li>
+<li>函数式编程关心数据的映射，命令式编程关心解决问题的步骤</li>
+<li><p>函数式编程关心类型（代数结构）之间的关系，命令式编程关心解决问题的步骤</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(1 + 2) * 3 - 4</span><br><span class="line"></span><br><span class="line">var a = 1 + 2;</span><br><span class="line">var b = a * 3;</span><br><span class="line">var c = b - 4;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>函数式编程</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var result = subtract(multiply(add(1,2), 3), 4);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>特点</p>
+<ul>
+<li><p>函数式一等公民</p>
+<blockquote>
+<p>函数可赋值给其它变量,可以作为参数,可以作为返回值</p>
+</blockquote>
+</li>
+<li><p>只用表达式,不用语句</p>
+</li>
+<li>没有副作用<blockquote>
+<p>函数要保持独立,功能只是返回新值,.诶呦其它的行为,不可修改外部的值</p>
+</blockquote>
+</li>
+<li>不修改状态<blockquote>
+<p>不使用变量保存状态,使用参数保存状态,最好的例子是递归</p>
+</blockquote>
+</li>
+<li>引用透明</li>
+</ul>
+</li>
+</ul>
+</h4></h4></h4></h4>
       
     </div>
     
@@ -400,8 +544,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -456,6 +609,305 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#0-目的"><span class="nav-number">1.</span> <span class="nav-text">0. 目的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1"><span class="nav-number">2.</span> <span class="nav-text">1. 原码,反码,补码
+#### 
+1. Introduce
+字节: Byte, B 
+其它存储单位
+1字 = 2B(字的英文是word)
+1KB = 1024B (千字节)
+1MB = 1024KB (兆字节)
+1GB = 1024MB (千兆字节)
+1TB = 1024GB (太字节)
+
+
+位,Bite
+
+计算机最小存储字节,每一个二进制存储0 or 1
+1个字节8位
+
+
+有符号数的二进制表示方法
+
+原码
+补码
+反码
+均有符号位和数值位
+符号位,最高位为符号位,0表示+,1表示-
+三种表示方法各不相同
+
+
+
+
+原码
+
+最高位为符号位
+其余位: 数值的绝对值
+
+
+反码
+
+正数的原码反码一样
+负数的反码,符号位不变,数值位按位取反,0为1,1为0
+
+
+补码
+
+正数的补码和原码一样
+负数的补码: 反码的末位+1
+
+
+计算机数值一律用补码来表示和存储
+
+大小端模式: 决定来了多字节数据的存储顺
+
+大端模式 : 高字节在低地址,低字节在高地址
+小端模式: 高字节在高地址,低字节在低地址
+
+
+
+
+2. 有关字符
+#### 
+
+每一个单字符都会被转化为整数值进行存储
+a 对应整数97(ASCII值)
+A 对应整数65(ASCII值)
+a &amp; A间隔32
+0 对应整数48(ASCII值)
+
+
+
+123int i = &#39;a&#39;char c = 97//char 可以当做整数类型使用
+
+转义序列
+\nnn :任意八进制值
+\xnn :任意十六进制值
+
+
+
+
+3. 数据类型及取值范围
+#### 
+3.1 无符号整数和有符号整数区别
+区别
+
+有符号整数,最高位是符号位,其余位是数值位(补码)
+无符号整数,无符号位,所有数都是数值位
+
+
+溢出相关
+
+少字节赋值给多字节的变量时: 其余位会补0
+取值范围内: 最小值-1,得到最大值,最大值+1得到最小值
+
+
+几个有趣的溢出
+
+
+
+4. 函数式编程
+#### 
+
+命令式编程 &amp; 函数式编程
+函数式编程关心数据的映射，命令式编程关心解决问题的步骤
+函数式编程关心类型（代数结构）之间的关系，命令式编程关心解决问题的步骤
+  12345(1 + 2) * 3 - 4var a = 1 + 2;var b = a * 3;var c = b - 4;
+
+函数式编程
+  1var result = subtract(multiply(add(1,2), 3), 4);
+
+特点
+
+函数式一等公民
+
+函数可赋值给其它变量,可以作为参数,可以作为返回值
+
+
+只用表达式,不用语句
+
+没有副作用
+函数要保持独立,功能只是返回新值,.诶呦其它的行为,不可修改外部的值
+
+
+不修改状态
+不使用变量保存状态,使用参数保存状态,最好的例子是递归
+
+
+引用透明
+
+
+
+</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-Introduce"><span class="nav-number">2.1.</span> <span class="nav-text">1. Introduce</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2"><span class="nav-number">3.</span> <span class="nav-text">2. 有关字符
+#### 
+
+每一个单字符都会被转化为整数值进行存储
+a 对应整数97(ASCII值)
+A 对应整数65(ASCII值)
+a &amp; A间隔32
+0 对应整数48(ASCII值)
+
+
+
+123int i = &#39;a&#39;char c = 97//char 可以当做整数类型使用
+
+转义序列
+\nnn :任意八进制值
+\xnn :任意十六进制值
+
+
+
+
+3. 数据类型及取值范围
+#### 
+3.1 无符号整数和有符号整数区别
+区别
+
+有符号整数,最高位是符号位,其余位是数值位(补码)
+无符号整数,无符号位,所有数都是数值位
+
+
+溢出相关
+
+少字节赋值给多字节的变量时: 其余位会补0
+取值范围内: 最小值-1,得到最大值,最大值+1得到最小值
+
+
+几个有趣的溢出
+
+
+
+4. 函数式编程
+#### 
+
+命令式编程 &amp; 函数式编程
+函数式编程关心数据的映射，命令式编程关心解决问题的步骤
+函数式编程关心类型（代数结构）之间的关系，命令式编程关心解决问题的步骤
+  12345(1 + 2) * 3 - 4var a = 1 + 2;var b = a * 3;var c = b - 4;
+
+函数式编程
+  1var result = subtract(multiply(add(1,2), 3), 4);
+
+特点
+
+函数式一等公民
+
+函数可赋值给其它变量,可以作为参数,可以作为返回值
+
+
+只用表达式,不用语句
+
+没有副作用
+函数要保持独立,功能只是返回新值,.诶呦其它的行为,不可修改外部的值
+
+
+不修改状态
+不使用变量保存状态,使用参数保存状态,最好的例子是递归
+
+
+引用透明
+
+
+
+</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3"><span class="nav-number">4.</span> <span class="nav-text">3. 数据类型及取值范围
+#### 
+3.1 无符号整数和有符号整数区别
+区别
+
+有符号整数,最高位是符号位,其余位是数值位(补码)
+无符号整数,无符号位,所有数都是数值位
+
+
+溢出相关
+
+少字节赋值给多字节的变量时: 其余位会补0
+取值范围内: 最小值-1,得到最大值,最大值+1得到最小值
+
+
+几个有趣的溢出
+
+
+
+4. 函数式编程
+#### 
+
+命令式编程 &amp; 函数式编程
+函数式编程关心数据的映射，命令式编程关心解决问题的步骤
+函数式编程关心类型（代数结构）之间的关系，命令式编程关心解决问题的步骤
+  12345(1 + 2) * 3 - 4var a = 1 + 2;var b = a * 3;var c = b - 4;
+
+函数式编程
+  1var result = subtract(multiply(add(1,2), 3), 4);
+
+特点
+
+函数式一等公民
+
+函数可赋值给其它变量,可以作为参数,可以作为返回值
+
+
+只用表达式,不用语句
+
+没有副作用
+函数要保持独立,功能只是返回新值,.诶呦其它的行为,不可修改外部的值
+
+
+不修改状态
+不使用变量保存状态,使用参数保存状态,最好的例子是递归
+
+
+引用透明
+
+
+
+</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-无符号整数和有符号整数区别"><span class="nav-number">5.</span> <span class="nav-text">3.1 无符号整数和有符号整数区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4"><span class="nav-number">6.</span> <span class="nav-text">4. 函数式编程
+#### 
+
+命令式编程 &amp; 函数式编程
+函数式编程关心数据的映射，命令式编程关心解决问题的步骤
+函数式编程关心类型（代数结构）之间的关系，命令式编程关心解决问题的步骤
+  12345(1 + 2) * 3 - 4var a = 1 + 2;var b = a * 3;var c = b - 4;
+
+函数式编程
+  1var result = subtract(multiply(add(1,2), 3), 4);
+
+特点
+
+函数式一等公民
+
+函数可赋值给其它变量,可以作为参数,可以作为返回值
+
+
+只用表达式,不用语句
+
+没有副作用
+函数要保持独立,功能只是返回新值,.诶呦其它的行为,不可修改外部的值
+
+
+不修改状态
+不使用变量保存状态,使用参数保存状态,最好的例子是递归
+
+
+引用透明
+
+
+
+</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
