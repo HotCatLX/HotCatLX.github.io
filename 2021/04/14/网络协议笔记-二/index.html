@@ -1,0 +1,2254 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+<meta name="baidu-site-verification" content="bQc1gZn8SE" />
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+
+
+
+
+  <meta name="keywords" content="iOS," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="目录 1.应用层协议: DNS &amp;amp; DHCP 1.1 DNS 1.2 DHCP   2.HTTP 2.1 版本 2.2 报文格式 2.3 请求方式 2.4 头部字段 2.5 状态码 2.6 代理服务器 2.7 CDN 2.8 Cache   3.网络安全 3.1 网络层安全威胁 3.2 传输层安全威胁 3.3 应用层层安全威胁 3.4 加密方式:不可逆加密 3.5 加密方式:可逆加密 3">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络协议笔记(二)">
+<meta property="og:url" content="http://yoursite.com/2021/04/14/网络协议笔记-二/index.html">
+<meta property="og:site_name" content="HotCatLX Blog">
+<meta property="og:description" content="目录 1.应用层协议: DNS &amp;amp; DHCP 1.1 DNS 1.2 DHCP   2.HTTP 2.1 版本 2.2 报文格式 2.3 请求方式 2.4 头部字段 2.5 状态码 2.6 代理服务器 2.7 CDN 2.8 Cache   3.网络安全 3.1 网络层安全威胁 3.2 传输层安全威胁 3.3 应用层层安全威胁 3.4 加密方式:不可逆加密 3.5 加密方式:可逆加密 3">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/disconnected-wallpaper-2560x1440.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-21_18-54-11.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-22_00-20-08.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-22_00-20-45.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-22_00-22-22.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-22_00-37-28.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-22_00-39-14.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-22_00-40-12.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-22_01-17-22.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-22_01-18-42.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-23_01-00-25.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-23_01-06-04.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-23_01-32-44.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_17-16-49.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_18-50-31.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_18-51-06.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_21-51-33.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_22-14-52.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_22-30-50.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_22-36-45.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_22-42-54.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_22-47-39.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_22-51-12.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-45-10.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-48-48.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-50-36.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-51-43.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-51-55.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-52-09.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-52-37.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-52-45.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-52-53.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-52-59.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-53-06.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-53-15.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_11-29-16.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_11-53-22.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_12-00-14.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_12-06-28.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_12-10-00.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_12-13-08.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_12-14-34.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_12-17-50.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_17-01-32.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_17-23-10.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_17-33-48.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_21-29-56.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_21-37-46.jpg">
+<meta property="og:updated_time" content="2021-04-13T17:14:12.061Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网络协议笔记(二)">
+<meta name="twitter:description" content="目录 1.应用层协议: DNS &amp;amp; DHCP 1.1 DNS 1.2 DHCP   2.HTTP 2.1 版本 2.2 报文格式 2.3 请求方式 2.4 头部字段 2.5 状态码 2.6 代理服务器 2.7 CDN 2.8 Cache   3.网络安全 3.1 网络层安全威胁 3.2 传输层安全威胁 3.3 应用层层安全威胁 3.4 加密方式:不可逆加密 3.5 加密方式:可逆加密 3">
+<meta name="twitter:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/disconnected-wallpaper-2560x1440.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/04/14/网络协议笔记-二/"/>
+
+
+
+
+
+  <title>网络协议笔记(二) | HotCatLX Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HotCatLX Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Recording Life & Study</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/04/14/网络协议笔记-二/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LiuXiao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/blackCat.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HotCatLX Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">网络协议笔记(二)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-14T00:59:58+08:00">
+                2021-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/disconnected-wallpaper-2560x1440.jpg" alt=""></p>
+<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><ul>
+<li><a href="#1">1.应用层协议: DNS &amp; DHCP</a><ul>
+<li><a href="#1.1">1.1 DNS</a></li>
+<li><a href="#1.2">1.2 DHCP</a></li>
+</ul>
+</li>
+<li><a href="#2">2.HTTP</a><ul>
+<li><a href="#2.1">2.1 版本</a></li>
+<li><a href="#2.2">2.2 报文格式</a></li>
+<li><a href="#2.3">2.3 请求方式</a></li>
+<li><a href="#2.4">2.4 头部字段</a></li>
+<li><a href="#2.5">2.5 状态码</a></li>
+<li><a href="#2.6">2.6 代理服务器</a></li>
+<li><a href="#2.7">2.7 CDN</a></li>
+<li><a href="#2.8">2.8 Cache</a></li>
+</ul>
+</li>
+<li><a href="#3">3.网络安全</a><ul>
+<li><a href="#3.1">3.1 网络层安全威胁</a></li>
+<li><a href="#3.2">3.2 传输层安全威胁</a></li>
+<li><a href="#3.3">3.3 应用层层安全威胁</a></li>
+<li><a href="#3.4">3.4 加密方式:不可逆加密</a></li>
+<li><a href="#3.5">3.5 加密方式:可逆加密</a></li>
+<li><a href="#3.6">3.6 加密方式:混合密码系统</a></li>
+<li><a href="#3.7">3.7 加密方式:数字签名</a></li>
+<li><a href="#3.8">3.8 加密方式:证书</a></li>
+</ul>
+</li>
+<li><a href="#4">4.HTTPS</a><ul>
+<li><a href="#4.1">4.1 简介</a></li>
+<li><a href="#4.2">4.2 连接过程</a></li>
+</ul>
+</li>
+<li><a href="#5">5.HTTP的升级改进</a><ul>
+<li><a href="#5.1">5.1 HTTP/1.1的不足</a><ul>
+<li><a href="#5.2">5.2 HTTP/2的改进</a></li>
+<li><a href="#5.3">5.3 HTTP/3的改进</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#6">6.其它协议</a><ul>
+<li><a href="#6.1">6.1 WebSocket</a></li>
+<li><a href="#6.2">6.2 WebService</a></li>
+<li><a href="#6.3">6.3 RESTful</a></li>
+<li><a href="#6.4">6.4 HTTPDNS</a></li>
+<li><a href="#6.5">6.5 FTP</a></li>
+<li><a href="#6.6">6.6 邮件协议</a></li>
+<li><a href="#6.7">6.7 IPv6</a></li>
+<li><a href="#6.8">6.8 即时通信</a></li>
+<li><a href="#6.9">6.9 流媒体</a></li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<hr>
+<hr>
+<hr>
+<h3 id="1">1. 应用层协议: DNS &amp; DHCP</h3>
+
+<ul>
+<li><p>应用层<strong>常见协议</strong></p>
+<blockquote>
+<p>超文本协议: HTTP HTTPS</p>
+</blockquote>
+<blockquote>
+<p>文件传输: FTP</p>
+</blockquote>
+<blockquote>
+<p>电子邮件: SMTP POP3 IMAP</p>
+</blockquote>
+<blockquote>
+<p>动态主机配置: DHCP</p>
+</blockquote>
+<blockquote>
+<p>域名系统: DNS</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<h5 id="1.1">1.1 DNS</h5>
+
+<ul>
+<li><p>域名,Domain Name</p>
+<ul>
+<li>IP地址不方便记忆,且无法表达组织的名称和性质,因此设计了域名</li>
+<li>访问到具体的主机,还是要知道目标主机的IP地址</li>
+<li><p>域名可以分为:</p>
+<pre><code>1. 顶级域名,TLD,top-level Domain
+2. 二级域名
+3. 三级域名
+</code></pre></li>
+</ul>
+</li>
+<li><p>顶级域名</p>
+<ul>
+<li><p>通用顶级域名.General Top-level Domain,gTLD</p>
+<pre><code>1. .com(公司) .org(组织机构) .edu(教育) .gov(政府部分) .int(国际组织)
+</code></pre></li>
+<li><p>国家及地区顶级域名,Country Code Top-level Domain,ccTLD</p>
+<pre><code>1. .cn(中国) .jp(日本) .uk(英国)
+</code></pre></li>
+<li><p>新通用顶级域名,New Generic Top-level Domain, New gTLD</p>
+<pre><code>1. .vip .club .shop等
+</code></pre></li>
+</ul>
+</li>
+<li><p>二级域名</p>
+<ul>
+<li><p>顶级域名之下的域名</p>
+<pre><code>1. 通用顶级域名之下,一般是指名称,例如Google,baidu
+2. 在国家地区顶级域名下,一般指注册类别的,例如com,edu,gov
+</code></pre></li>
+</ul>
+</li>
+<li><p>DNS</p>
+<ul>
+<li>Domain Name System,域名系统</li>
+<li><em><strong>利用DNS协议,可以将域名,解析成对应的IP地址</strong></em></li>
+<li><p>DNS可以基于UDP协议,也可以基于TCP协议,服务器占用<strong>53端口</strong></p>
+</li>
+<li><p>服务器</p>
+<pre><code>1. 客户端会先访问最近的一台DNS服务器(客户端配置的DNS服务器)
+2. 所有的DNS服务器都记录了DNS根域名服务器的IP地址
+3. 上级DNS服务器会记录下一级DNS服务器的IP地址
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="1.2">1.2 DHCP </h5>
+
+<ul>
+<li><p>IP地址按照分配方式可分为</p>
+<ul>
+<li><p>静态IP地址</p>
+<pre><code>1. 手动设置
+2. 使用于较为固定的台式机和服务器
+</code></pre></li>
+<li><p>动态IP地址</p>
+<pre><code>1. 从DHCP服务器自动获取IP地址
+2. 适用场景: 移动设备和无线设备
+</code></pre></li>
+</ul>
+</li>
+<li><p>DHCP</p>
+</li>
+</ul>
+<pre><code>* Dynamic Host Configuration Protocol,**动态主机配置协议**
+* **基于UDP协议,客户端端是68端口,服务器是67端口**
+* 路由器担当了DHCP服务器的职责
+* _**分配IP的4个阶段**_
+
+        1. DISCOVER: 发现服务器;
+            1.1 发广播包,源IP是0.0.0.0,目标IP是255.255.255.255,目标MAC是FF:FF:FF:FF:FF:FF)
+        2. OFFER: 提供租约
+            2.1 服务器返回可租用的IP地址,租用期限,子网掩码,网关,DNS等
+            2.2 可能会有多个服务器提供租约
+        3. REQUEST: 选择IP地址
+            3.1 客户端选择一个OFFER,发送广播包回应
+        4. ACKNOWLEDGE: 确认
+            4.1 别选中的服务器发送ACK数据包给客户端,IP分配结束
+
+* 可以借助DHCP中继代理,实现跨网段分配IP地址
+* 客户端会在租期不足时,**自动向DHCP服务器发送REQUEST信息,申请续约**
+</code></pre><hr>
+<hr>
+<hr>
+<h3 id="2">2. HTTP </h3>
+
+<h5 id="2.1">2.1 版本</h5>
+
+<ul>
+<li><p><em>HTTP</em>: 超文本传输协议</p>
+<pre><code>1. 应用最广泛的应用层协议之一
+2. 设计的最初目的是: 提供发布和接收HTML页面的方法
+</code></pre></li>
+<li><p>版本</p>
+<ul>
+<li><p>HTTP/0.9, 1991年</p>
+<blockquote>
+<p>只支持GET请求方法获取文本数据(HTML数据),不支持请求头和响应头</p>
+</blockquote>
+</li>
+<li><p>HTTP/1.0, 1996年</p>
+<blockquote>
+<p>支持POST,HEAD等请求方式,支持请求头和响应头,更多的数据类型</p>
+</blockquote>
+<blockquote>
+<p>浏览器每次请求都需要和服务器建立一个TCP连接,请求处理完成后立即断开TCP连接</p>
+</blockquote>
+</li>
+<li><p>HTTP/1.1, 1997年</p>
+<blockquote>
+<p>支持PUT,DELETE等请求方法</p>
+</blockquote>
+<blockquote>
+<p>采用持久连接,Connec:keep-alive;多个请求可以共用一个TCP连接</p>
+</blockquote>
+</li>
+<li><p>HTTP/2.0, 2015年</p>
+</li>
+<li>HTTP/3.0, 2018年</li>
+</ul>
+</li>
+<li><p>标准</p>
+<ul>
+<li>一系列的RFC(request for comments,请求意见稿)</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="2.2">2.2 报文格式</h5>
+
+<p><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-21_18-54-11.jpg" alt=""></p>
+<ul>
+<li>定义的语言: ABNF,最严谨的HTTP报文格式描述形式</li>
+</ul>
+<hr>
+<h5 id="2.3">2.3 请求方式</h5>
+
+<ul>
+<li>目前有9种请求方法<ul>
+<li>GET</li>
+<li>HEAD</li>
+<li>POST</li>
+<li>PUT</li>
+<li>DELETE</li>
+<li>CONNECT</li>
+<li>OPTIONS</li>
+<li>TRACE</li>
+<li>PATCH</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">请求方法</th>
+<th style="text-align:left">用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">GET</td>
+<td style="text-align:left">常用于<strong>读取</strong>操作,请求参数拼接在URL的后面,但是浏览器是有URL的长度限制</td>
+</tr>
+<tr>
+<td style="text-align:left">POST</td>
+<td style="text-align:left">常用于<strong>添加,修改,删除</strong>操作,请求参数可以放到请求体里,<em>(无大小限制)</em></td>
+</tr>
+<tr>
+<td style="text-align:left">HEAD</td>
+<td style="text-align:left">1. 请求得到与GET请求相同的响应,但是没有<em>响应体</em> <br> 2. 使用场景: 下载大文件前,先获取其大小,再决定是否要下载,以此可节约带宽资源</td>
+</tr>
+<tr>
+<td style="text-align:left">OPTIONS</td>
+<td style="text-align:left">1. 用于获取目的资源支持的<strong>通信选项</strong>,比如服务器支持的<strong>请求方法</strong> <br> 2. HTTP/1.1, 开始支持</td>
+</tr>
+<tr>
+<td style="text-align:left">PUT</td>
+<td style="text-align:left">用于对已存在的资源进行整体覆盖</td>
+</tr>
+<tr>
+<td style="text-align:left">PATCH</td>
+<td style="text-align:left">用于对<strong>资源进行部分修改</strong>,如果资源不存在,会创建新的资源</td>
+</tr>
+<tr>
+<td style="text-align:left">TRACE</td>
+<td style="text-align:left">请求服务器回显其收到的请求信息,主要用于<strong>HTTP请求的测试和诊断</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">CONNECT</td>
+<td style="text-align:left">1. <strong>用于开启一个客户端与所请求资源之间的双向沟通的通道</strong>,用于创建隧道tunnel<br> 2. 可以用来访问采用了SSL(HTTPS)协议的站点</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h5 id="2.4">2.4 头部字段</h5>
+
+<ul>
+<li><p>头部字段</p>
+<ul>
+<li><p>请求头字段</p>
+<blockquote>
+<p>有关要获取的资源或客户端本身信息的消息头</p>
+</blockquote>
+</li>
+<li><p>响应头字段</p>
+<blockquote>
+<p>有关响应的补充信息,比如服务器本身的名称和版本的消息头</p>
+</blockquote>
+</li>
+<li><p>实体头字段</p>
+<blockquote>
+<p>有关实体主体的更多消息,比如content-length,contrnt-type(MIME类型)</p>
+</blockquote>
+</li>
+<li><p>通用头字段</p>
+<blockquote>
+<p>适用于请求和响应消息,与消息主体无关</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>请求头字段<br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-22_00-20-08.jpg" alt=""><br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-22_00-20-45.jpg" alt=""><br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-22_00-22-22.jpg" alt=""></p>
+</li>
+</ul>
+<pre><code>1. Accept-Charset中的q表示权重或者优先级,q值越大(默认和最大值是1)优先级越高
+</code></pre><ul>
+<li><p>响应头字段<br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-22_00-37-28.jpg" alt=""><br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-22_00-39-14.jpg" alt=""><br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-22_00-40-12.jpg" alt=""></p>
+<ul>
+<li><p>Access-Control-Allow-Origin (<em>前后端</em>)使用解析</p>
+<pre><code>1. 客户端端请求后台服务器(Tomcat),需要访问index.html资源
+2. 后台服务器返回页面服务器(Nginx)地址,通过Access-Control-Allow-Origin字段
+3. 返回字段例如 xxxxhost:63342,客户端去页面服务器请求index.html的数据
+</code></pre></li>
+<li><p>Set-cookie: 登录使用解析</p>
+<pre><code>1. 登录操作,客户端会将username&amp;password传递给服务器
+2. 服务器校验通过后会生成一个session和对应的sessionid;并将sessionid放在Set-Cookie字段里返回
+3. 在下一次客户端请求中客户端请求头里增加Cookie字段,服务端回去字段中取出对应的sessionid
+</code></pre><blockquote>
+<p>案例1<br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-22_01-17-22.jpg" alt=""></p>
+</blockquote>
+<blockquote>
+<p>案例2<br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-22_01-18-42.jpg" alt=""></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="2.5">2.5 状态码</h5>
+
+<ul>
+<li><p>分类</p>
+<pre><code>1. 信息响应: 100-199
+2. 成功响应: 200-299
+3. 重定向: 300-399
+4. 客户端错误: 400-499
+5. 服务器错误: 500-599
+</code></pre></li>
+<li><p>常见状态码解析</p>
+<p>  |状态码|解析|<br>  |:–|:–|<br>  |100 Continue|1. 请求的初始部分已被服务器收到,且没有被拒绝;客户端应该继续发送剩余请求,如果请求已完成,忽略 <br> 2. 允许客户端发送带请求体的请求前,判断服务器是否愿意接受请求 |<br>  |200 OK|请求成功|<br>  |302 Found|请求的资源被暂时移动到由Location头部指定的URL上|<br>  |304 Not Modified|可以使用缓存内容|<br>  |400 Bad Request|语法无效,服务器无法处理请求|<br>  |401 Unauthorized|缺乏目标资源的身份验证凭证|<br>  |403 Forbidden|服务器有能力处理该请求,但是拒绝授权访问|<br>  |404 Not Found|服务器无法找到请求的资源|<br>  |405 Method Not Allowed|服务器净值当前HTTP方法的请求|<br>  |408 Request Timeout|服务器想要将未在使用的连接关闭|<br>  |500 Internal Server Error|所请求的服务器遇到域外情况并阻止执行请求|<br>  |501 Not Implemented|请求方法服务器不支持|<br>  |502 Bad Gateway|作为网关或代理角色的服务器,从上游服务器接收到的响应是无效的|<br>  |503 Server Unavailable|服务器尚未处于可以接受请求的状态|</p>
+</li>
+</ul>
+<hr>
+<h5 id="2.6">2.6 代理服务器</h5>
+
+<ul>
+<li>本身不生产内容,<em>转发上下游的请求和响应</em></li>
+<li><p>正向代理: 代理的对象是客户端</p>
+<pre><code>1. 隐藏客户端身份
+2. 绕过防火墙,突破访问限制
+3. 数据过滤
+</code></pre></li>
+</ul>
+<ul>
+<li><p>反向代理: 代理的对象是服务器</p>
+<pre><code>1. 隐藏服务器身份
+2. 安全防护
+3. 负载均衡
+</code></pre></li>
+<li><p>抓包工具</p>
+<ul>
+<li><p>正向代理: 在客户端启动了正向代理服务</p>
+<blockquote>
+<p>比如Fiddler &amp; Charles等抓包工具</p>
+</blockquote>
+</li>
+<li><p>底层驱动: <strong>拦截网卡处理的数据</strong></p>
+<blockquote>
+<p>Wireshark的原理</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>相关头部字段</p>
+<ul>
+<li>Via: 追加经过的<strong>每一台代理服务器</strong>的主机名</li>
+<li>X-Forwarded-For: 追加请求方的IP地址</li>
+<li><p>X-Real_IP: 客户端的真实IP地址</p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-23_01-00-25.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="2.7">2.7 CDN</h5>
+
+<ul>
+<li><p>CDN: Content Delivery/Distribution Network; 内容分发网络</p>
+<ul>
+<li>利用最近的服务器</li>
+<li>更快更可靠的的将资源文件传递给用户</li>
+</ul>
+</li>
+<li><p>使用<br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-23_01-06-04.jpg" alt=""></p>
+<pre><code>1. 用户发起请求
+2. DNS解析,根据IP地理位置,接入网类型,找到离用户路由最短,负载最小的存储服务器
+3. 获得缓存服务器的IP
+4. 缓存服务器有目标资源,将内容返回
+5. 缓存服务器无目标资源,向源站请求数据,回去数据缓存,并把内容返回给用户
+</code></pre></li>
+</ul>
+<hr>
+<h5 id="2.8">2.8 Cache </h5>
+
+<ul>
+<li>通常会缓存的使用场景: <strong>GET请求+静态资源</strong></li>
+<li><p><em>响应头</em></p>
+<p>  |响应头参数|内容|<br>  |:–|:–|<br>  |Pragma| 作用类似于Cache-Control, HTTP1.0|<br>  |Expires|缓存过期时间, HTTP1.0|<br>  |Cache-Control|设置缓存策略 <br> 1. no-storage: 不缓存 <br> 2. public,允许用户,代理服务器缓存数据到本地<br> 3. private: 只允许用户缓存数据到本地<br> 4. max-age: 缓存有效时间,单位秒<br> 5. no-cache: 每次需要请求服务器询问缓存是否有变更,再决定如何使用缓存|<br>  |Last-modified|资源最后一次修改时间|<br>  |ETag|资源唯一标识,文件内容计算出来的摘要值|</p>
+<blockquote>
+<p>优先级: Pragma &gt; Cache-Control &gt; Expires</p>
+</blockquote>
+<blockquote>
+<p>优先级: ETag &gt; Last-modified</p>
+</blockquote>
+</li>
+<li><p>请求头</p>
+<ul>
+<li><em>if-none-match</em></li>
+</ul>
+</li>
+</ul>
+<pre><code>        1. 如果上一次响应中有ETag,会将ETag作为请求头的值
+        2. 如果服务器发现最新资源的摘要值和if-none-match不匹配,就返回新的资源, 状态码返回200
+        3. 如果匹配,就不返回资源的具体数据,状态码返回 304
+
+* _if-modified-since_
+
+        1. 如果上一次响应中没有ETag,有Last-modified的值,会将Last-modified的值作为请求头
+        2. 如果服务器发现资源最后一次修改时间晚于if-modified-since,就会返回新的资源,状态码为 200
+        3. 否则就不返回资源的具体数据,状态码返回 304
+</code></pre><ul>
+<li><p>Last-modified &amp; ETag</p>
+<ul>
+<li><p>Last-modified的缺陷</p>
+<ul>
+<li>只能精确到秒级</li>
+<li>如果资源被修改了,但是内容没有变更,还是会传输数据,造成浪费</li>
+</ul>
+</li>
+<li><p>ETag</p>
+<ul>
+<li>只要内容没有变更,就不会重复传输</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>缓存流程<br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-23_01-32-44.jpg" alt=""></p>
+</li>
+</ul>
+<hr>
+<hr>
+<hr>
+<h3 id="3">3. 网络安全 </h3>
+
+<ul>
+<li><p>面临4种安全威胁</p>
+<ul>
+<li><p>主动攻击</p>
+<blockquote>
+<p>中断,篡改,伪造 </p>
+</blockquote>
+</li>
+<li><p>被动攻击</p>
+<blockquote>
+<p>截获</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>HTTP默认使用明文传输,因此可能会有很大的安全隐患: (需要对通信内容加密)</p>
+</li>
+<li><p>常见加密方式</p>
+<ul>
+<li>不可逆<ul>
+<li>单向散列函数: MD5, SHA</li>
+</ul>
+</li>
+<li>可逆<ul>
+<li>对称加密: DES,3DES,AES</li>
+<li>非对称加密: RSA</li>
+</ul>
+</li>
+<li>其它<ul>
+<li>混合密码系统</li>
+<li>签名</li>
+<li>证书</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="3.1">3.1 网络层安全威胁</h5>
+
+<ul>
+<li><p>ARP欺骗</p>
+<ul>
+<li><p>效果</p>
+<pre><code>1. 攻击者获取局域网上的数据包
+2. 可让特定网络之间无法通信
+3. 让送至特定IP地址的流量被错误送到攻击者所取代的地方
+</code></pre></li>
+<li><p>步骤:</p>
+<ul>
+<li>攻击者,收到过被攻击者的ARP请求,知道被攻击者的MAC地址</li>
+<li><p>发送错误MAC地址的ARP响应,已达到窃听或者篡改目的</p>
+<p><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_17-16-49.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>防护:</p>
+<ul>
+<li>DHCP Snooping</li>
+<li>软件监听ARP的不正常变动    </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="3.2">3.2 传输层安全威胁</h5>
+
+<ul>
+<li><p>DoS,DDoS</p>
+<ul>
+<li><p>DoS: <em>Denial-of-Service attack</em>,拒绝服务攻击</p>
+<pre><code>1. 使目标网络或系统资源被耗尽,使服务中断或停止,其余用户无法访问
+</code></pre><ul>
+<li>带宽消耗性: UDP洪水攻击, ICMP洪水攻击</li>
+<li>资源消耗性: SYN洪水攻击, LAND洪水攻击</li>
+</ul>
+</li>
+<li><p>DDoS: <em>分布式拒绝服务攻击,Distributed Denial-of-Service attack</em></p>
+<pre><code>1. 攻击者利用网络上对个被攻陷的电脑(僵尸)向特定目标发送DoS攻击
+</code></pre></li>
+<li><p>防御</p>
+<ul>
+<li>入侵检测,流量过滤,多重验证: 过滤堵塞带宽的流量</li>
+<li>防火墙: 设置规则,允许或拒绝特定网络协议,端口,IP地址<ul>
+<li>复杂攻击难以用简单规则阻止</li>
+</ul>
+</li>
+<li>交换机和路由器,有一定的速度限制和访问控制能力</li>
+<li><em>黑洞引导</em><ul>
+<li>将受到攻击的计算机的通信发送至一个黑洞(空接口或不存在的地址),以避免网络受到较大影响</li>
+</ul>
+</li>
+<li>流量清洗<ul>
+<li>DDoS防护清洗中心,将正常流量和恶意流量区分开</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>SYN洪水攻击</p>
+<ul>
+<li>SYN flooding attack</li>
+<li>攻击者发送一些列SYN请求到目标地址,但是让目标无法送到返回的ACK(第三次握手),而进行等待,消耗资源</li>
+<li><p>方法</p>
+<pre><code>1. 跳过发送最后的ACK消息
+2. 修改源IP地址,让目标发送SYN-ACK到伪造的IP地址,因此目标永不可能收到ACK(第3次握手)
+</code></pre></li>
+</ul>
+</li>
+<li><p>LAND攻击</p>
+<ul>
+<li><em>局域网拒绝服务攻击,local area network denial attack</em></li>
+<li>持续发送相同的源地址和目标地址的欺骗数据包,使目标试图建立连接,消耗系统资源直至崩溃</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="3.3">3.3 应用层安全威胁</h5>
+
+<ul>
+<li><p>DNS劫持,域名劫持</p>
+<pre><code>1. 攻击者篡改某个域名的解析结果,使得指向域名的IP地址换成另一个IP地址
+2. 使得响应网址的访问被劫持到另一个不可达的或假冒地址
+3. 从而实现获取用户信息等目的
+</code></pre></li>
+<li><p>防护: 使用安全的DNS服务器</p>
+</li>
+<li>HTTP劫持: 对HTTP数据包进行拦截处理,插入JS代码</li>
+</ul>
+<hr>
+<h5 id="3.4">3.4 加密方式:不可逆加密-单向散列函数</h5>
+
+<ul>
+<li><p>One-way hash function</p>
+</li>
+<li><p>称呼</p>
+<ul>
+<li>消息摘要函数(message digest function)</li>
+<li>哈希函数(hash function)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>输出散列值: <strong>消息摘要(message digest) or 指纹(fingerprint)</strong></li>
+<li>可以根据<strong>消息内容计算出散列值</strong></li>
+<li><strong>散列值的长度和消息内容的长度无关</strong></li>
+<li><p><strong>单向散列函数都会计算出固定长度的散列值</strong></p>
+</li>
+<li><p>特点</p>
+<blockquote>
+<ol>
+<li>固定的长度的散列值</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>消息不同,内容不同,散列值不同(即使1bit的改变)</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3">
+<li>具有单向性(根据散列值无法计算出消息内容)</li>
+</ol>
+</blockquote>
+</li>
+<li><p>常见单向散列函数</p>
+<ul>
+<li><p>MD4,MD5</p>
+<blockquote>
+<p>产生128bit的散列值</p>
+</blockquote>
+</li>
+<li><p>SHA-1</p>
+<blockquote>
+<p>产生160bit的散列值</p>
+</blockquote>
+</li>
+<li><p>SHA-2</p>
+<blockquote>
+<p>SHA-256,SHA-384,SHA-512, 散列值分别为256位,384位,512位</p>
+</blockquote>
+</li>
+<li><p>SHA-3</p>
+<blockquote>
+<p>全新标准</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><strong>防止数据被篡改</strong></p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_18-50-31.jpg" alt=""></p>
+<ul>
+<li><p>使用场景: 软件下载</p>
+<pre><code>1. 将软件资源放在镜像站点,下载软件的同时获取软件版本信息等对应的散列值
+2. 从源站获取一次版本信息的散列值
+3. 通过对散列值比较得出软件的完整性
+</code></pre><p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_18-51-06.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="3.5">3.5 加密方式:可逆加密</h5>
+
+<h5 id="3-5-1-对称加密"><a href="#3-5-1-对称加密" class="headerlink" title="3.5.1 对称加密"></a>3.5.1 对称加密</h5><ul>
+<li>加密的密钥和解密密钥一致</li>
+<li>Symmetric Cryptography</li>
+<li><p>常见算法: <strong>DES,3DES,AES</strong></p>
+</li>
+<li><p><strong>DES</strong></p>
+<ul>
+<li>data encryption standard</li>
+<li><strong>将64位明文加密成64位密文的对称加密算法</strong></li>
+<li><strong>密钥长度是64bit,但是每隔7位会有个错误检查位,因此密钥实质是56bit</strong></li>
+<li><strong>只能加密64bit的数据,如果遇到较大的数据,需要迭代DES加密</strong></li>
+</ul>
+</li>
+<li><p><strong>3DES</strong></p>
+<ul>
+<li>对DES重复3次所得到的一种密码算法,也叫3重DES</li>
+<li>不是三次DES加密</li>
+<li>而是加密-&gt;解密-&gt;加密的过程</li>
+<li>处理速度不高</li>
+</ul>
+</li>
+<li><p><strong>AES</strong></p>
+<ul>
+<li>Advanced Encryption Standard</li>
+<li>取代DES成为新标准的一种加密算法,又叫做Rijndeal加密法</li>
+<li>AES的密钥长度为<em>128,92,256三种</em></li>
+<li>首选的对称加密算法</li>
+</ul>
+</li>
+<li><p><strong>密钥配送问题</strong></p>
+<ul>
+<li>对称加密,一定会有遇到<strong>密钥配送问题</strong></li>
+<li>解决方案<ul>
+<li>事先共享密钥</li>
+<li>密钥分配中心,key distribution center,KDC</li>
+<li><em>非对称加密</em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="3-5-2-非对称加密"><a href="#3-5-2-非对称加密" class="headerlink" title="3.5.2 非对称加密"></a>3.5.2 非对称加密</h5><ul>
+<li><p>加密和解密用的密钥不同,<strong>公钥和私钥(也成为加密密钥,解密密钥)</strong></p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_21-51-33.jpg" alt=""></p>
+</li>
+<li><p>公钥&amp;私钥</p>
+<ul>
+<li>一对公钥和私钥成为<strong>密钥对</strong>,key pair</li>
+<li><strong>公钥加密的密文,需要使用对应的私钥才能解密</strong></li>
+<li><strong>私钥加密的密文,需要对应的公钥才能解密</strong></li>
+</ul>
+</li>
+<li><p><em>解决密钥配送问题</em></p>
+<pre><code>1. 消息接收者,生成一对公钥私钥
+2. 公钥发给消息的发送者
+3. 消息的发送者使用公钥加密消息
+4. 非对称加密的加密速度比对称加密要慢
+</code></pre></li>
+<li><p><strong>RSA</strong></p>
+<ul>
+<li>使用最广泛的<strong>非对称加密算法</strong></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="3.6">3.6 加密方式:混合密码系统</h5>
+
+<ul>
+<li>Hybrid Cryptosystem</li>
+<li><strong>对称加密的缺点: 不能很好解决密钥配送问题</strong></li>
+<li><strong>非对称加密的缺点: 加密解密速度慢</strong></li>
+<li><p>混合密码系统</p>
+<ul>
+<li>将对称加密和非对称加密优势结合</li>
+<li>解决非对称加密速度慢问题</li>
+<li>解决对称加密的密钥配送问题</li>
+</ul>
+</li>
+<li><p>应用场景</p>
+<ul>
+<li>SSL /TLS</li>
+</ul>
+</li>
+<li><p><strong>加密过程</strong></p>
+<ul>
+<li><p>会话密钥</p>
+<ul>
+<li>为本次通信生成的临时密钥</li>
+<li><strong>对称密钥</strong></li>
+<li><strong>加密消息,提高加密解密速度</strong></li>
+</ul>
+</li>
+<li><p>步骤</p>
+<ul>
+<li>消息发送者拥有消息接收者的公钥</li>
+<li>生成会话密钥,作为对称加密的密钥,加密消息</li>
+<li>用公钥,加密会话密钥</li>
+<li><p>将<strong>会话密钥和加密的消息,一起发送给接收者</strong></p>
+<p><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_22-14-52.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>解密过程</strong></p>
+<ul>
+<li>用私钥解密出<strong>会话密钥</strong></li>
+<li>再用会话密钥解密对称加密部分</li>
+</ul>
+</li>
+</ul>
+<pre><code>![](https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_22-22-07.jpg)
+</code></pre><hr>
+<h5 id="3.7">3.7 加密方式:数字签名</h5>
+
+<ul>
+<li>生成签名<ul>
+<li><strong>消息发送者</strong>完成,通过签名密钥生成</li>
+</ul>
+</li>
+<li>验证签名<ul>
+<li><strong>消息接收者</strong>完成.通过验证密钥验证</li>
+</ul>
+</li>
+<li><p><strong>由消息发送者的私钥进行签名</strong></p>
+</li>
+<li><p>步骤</p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_22-30-50.jpg" alt=""></p>
+</li>
+</ul>
+<pre><code>* 如果有人篡改消息或签名内容
+    * 散列值验证失败,证明内容被篡改
+</code></pre><ul>
+<li>目的: <strong>为了识别内容是否被篡改,并不是为了机密性</strong></li>
+<li><p>作用</p>
+<blockquote>
+<ol>
+<li>确认消息的完整性</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>识别消息是否被篡改</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3">
+<li>防止消息发送人否认</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li><p>在数字签名中,<strong>任何人都可以通过公钥验证签名,只有发送者能用私钥签名</strong></p>
+</li>
+<li><p>和非对称加密区别<br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_22-36-45.jpg" alt=""></p>
+</li>
+</ul>
+<hr>
+<h5 id="3.8"> 3.8 加密方式:证书</h5>
+
+<ul>
+<li><p>公钥可能会被中间人攻击</p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_22-42-54.jpg" alt=""></p>
+</li>
+<li><p>公钥的合法性验证: <strong>证书</strong></p>
+</li>
+<li>公钥证书,PKC,Public-key Certificate<ul>
+<li>内含: 姓名,邮箱,以及公钥信息等信息</li>
+<li><strong>由认证机构(CA)进行数字签名</strong></li>
+<li>各大CA的公钥,已经默认内置在浏览器和操作系统中</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_22-47-39.jpg" alt=""></p>
+<p><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_22-51-12.jpg" alt=""></p>
+<hr>
+<hr>
+<hr>
+<h3 id="4">4. HTTPS </h3>
+
+<h5 id="4.1"> 4.1 简介 </h5>
+
+<ul>
+<li>HTTPS,HyperText Transfer Protocol Secure,<em>超文本传输安全协议</em></li>
+<li><p>也被成为:</p>
+<blockquote>
+<p>HTTP over TLS; HTTP over SSL; HTTP Secure</p>
+</blockquote>
+</li>
+<li>默认端口: <strong>443</strong></li>
+<li>HTTP + SSL/TLS = HTTPS</li>
+<li><p>SSL/TLS也可以用在其它协议上</p>
+<pre><code>1. FTP + SSL/TLS -&gt; FTPS
+2. SMTP + SSL/TLS -&gt; SMTPS
+</code></pre></li>
+<li><p>TLS: Transport Layer Security,<strong>传输层安全性协议</strong></p>
+<ul>
+<li>前身是SSL(Secure Sockets Layer),安全套接字</li>
+</ul>
+</li>
+<li><p>历史版本信息</p>
+<pre><code>1. SSL2.0: 1995年,2011年弃用
+2. SSL3.0: 1996年,2015年被弃用
+3. TLS1.2: 2008年
+4. TLS1.3: 2018年
+</code></pre></li>
+<li><p>原理<br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-45-10.jpg" alt=""></p>
+</li>
+<li><p>OpenSSL</p>
+<ul>
+<li>是SSL/TLS的开源实现</li>
+<li>可以自建一套自己的CA,自己给自己颁发证书(<strong>自签名证书</strong>)</li>
+</ul>
+</li>
+<li><p>成本</p>
+<ul>
+<li>证书费用</li>
+<li>加解密计算</li>
+<li>访问速度降低</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="4.2"> 4.2 连接过程 </h5>
+
+<ul>
+<li><p>通信过程</p>
+<ul>
+<li>TCP3次握手</li>
+<li>TLS的连接</li>
+<li><p>HTTP请求和响应</p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-48-48.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="4-2-1-连接过程"><a href="#4-2-1-连接过程" class="headerlink" title="4.2.1 连接过程"></a>4.2.1 连接过程</h5><ul>
+<li><p>大概分为10部</p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-50-36.jpg" alt=""></p>
+</li>
+<li><p>步骤1: <strong>Client Hello</strong></p>
+<ul>
+<li>TLS版本</li>
+<li>支持的<em>加密组件(Cipher Suite)列表</em>: 是指所用的加密算法和密钥长度</li>
+<li><p><em>一个随机数ClientRandom</em></p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-51-43.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>步骤2: <strong>Server Hello</strong></p>
+<ul>
+<li>TLS版本</li>
+<li><em>选择的Client提供的加密组件</em></li>
+<li><p><em>一个随机数ServerRandom</em></p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-51-55.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>步骤3: <strong>Certificate</strong></p>
+<ul>
+<li><p>服务器的<em>公钥证书(CA数字签名过)</em></p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-52-09.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>步骤4: <strong>Server Key Exchange</strong></p>
+<ul>
+<li>用以实现<strong>ECDHE</strong>算法的一个参数(Server Params)</li>
+<li>ECDHE: 一种密钥交换算法</li>
+<li><p>Server Params,进过了服务器<em>私钥签名</em></p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-52-37.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>步骤5: <strong>Server Hello Done</strong></p>
+<ul>
+<li>告知客户端: 协商部分结束</li>
+<li><p>截至目前,明文共享了<em>3个参数</em></p>
+<blockquote>
+<p>Client Random; Server Random; Server Params</p>
+</blockquote>
+</li>
+<li><p>客户端获取到了服务器的公钥证书</p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-52-45.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>步骤6: <strong>Client Key Exchange</strong></p>
+<ul>
+<li>用以实现<strong>ECDHE</strong>算法的一个参数(Client Params)</li>
+<li><p>client&amp;server都可以</p>
+<blockquote>
+<p>使用ECDHE算法,根据Server Params, Client Params计算出一个新的随机密钥串(Pre-Master secret)</p>
+</blockquote>
+<blockquote>
+<p>结合Client Params,Server Params,Pre-Master secret生成一个主密钥</p>
+</blockquote>
+<blockquote>
+<p>最后利用主密钥衍生出其它密钥: <em>客户端发送用的会话密钥,服务端发送的会话密钥</em></p>
+</blockquote>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-52-53.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>步骤7: <strong>Change Cipher Spec</strong></p>
+<ul>
+<li><p>告知服务器: 之后的通信会采用计算出来的会话密钥进行加密</p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-52-59.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>步骤8: <strong>Finished</strong></p>
+<ul>
+<li>全部报文的整体校验值(摘要),加密之后发送给服务器</li>
+<li><p>这次握手是否成功,要以服务器是否能够正确解密该报文作为判断标准</p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-53-06.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>步骤9: <strong>Change Cipher Spec</strong></p>
+</li>
+<li><p>步骤10: <strong>Finished</strong></p>
+<ul>
+<li>客户端服务器都验证了<em>加密解密都没问题</em>,握手正式结束</li>
+<li><p>后面开始传输加密的HTTP请求和响应</p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-27_23-53-15.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<hr>
+<hr>
+<h3 id="5">5.HTTP的升级改进</h3>
+
+<h5 id="5.1"> 5.1 HTTP/1.1的不足</h5>
+
+<ul>
+<li><p>不足</p>
+<ul>
+<li><p>同一时间,一个连接只能对应一个请求</p>
+<blockquote>
+<p>大多数浏览器支持多个并发连接</p>
+</blockquote>
+</li>
+<li><p>只允许客户端主动发起请求</p>
+<blockquote>
+<p>一个请求对应一个响应</p>
+</blockquote>
+</li>
+<li><p><em>头部信息重复</em></p>
+<blockquote>
+<p>为每个请求增加开销</p>
+</blockquote>
+<blockquote>
+<p>如果使用cookie,头部信息占用达到上千字节</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>解决方案: <strong>SPDY</strong></p>
+<ul>
+<li>SPDY(speedy),基于TCP的应用层协议,强制使用SSL/TLS</li>
+<li><strong>并不是取代HTTP,只是修改了HTTP请求相应的传输方式,传输层和网络层还是分别基于TCP/IP</strong></li>
+<li><p>是HTTP/2的前身(2015年,Google不支持SPDY,拥抱HTTP/2)</p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_11-29-16.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="5.2"> 5.2 HTTP/2的改进</h5>
+
+<ul>
+<li><em>2015年正式发布</em></li>
+<li><p><strong>在底层传输做了改造和优化,但是语意上与1.1版本兼容</strong></p>
+<pre><code>1. 想要升级至HTTP/2,开发者不需要修改代码
+2. 只需要升级服务器配置,升级浏览器即可
+</code></pre></li>
+<li><p>概念</p>
+<ul>
+<li><p>数据流: 已建立连接内的<strong>双向字节流</strong>,可以承载一条或多条消息</p>
+<blockquote>
+<p>通信都在一个TCP连接上完成,这个连接可承载任意数量的双向数据流</p>
+</blockquote>
+</li>
+<li><p>消息: 在HTTP/2中由一系列帧组成</p>
+</li>
+<li><p>帧: <strong>HTTP/2通信的最小单位,每一个帧都包含帧头(标示当前帧所属的数据流)</strong></p>
+<blockquote>
+<p>来自不同数据流的帧可以交错发送,再根据帧头的数据流标识符重组</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>特性</p>
+<ul>
+<li><p><strong>二进制格式,Binary Framing</strong></p>
+<ul>
+<li>二进制格式传输数据,取代HTTP/1.1的文本传输</li>
+<li>二进制格式便于解析和扩展</li>
+</ul>
+</li>
+<li><p><strong>多路复用,Multiplexing</strong></p>
+<ul>
+<li>将消息分解为互不依赖的帧,交错发送,再重新组组装</li>
+<li><em>并行交错的发送多个请求.之间互不影响</em></li>
+<li><em>并行交错的发送多个响应.之间互不影响</em></li>
+<li><p><em>一个连接并行发送多个请求和响应</em></p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_11-53-22.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p><strong>优先级</strong></p>
+<ul>
+<li>允许每一个数据流有一个关联的权重和依赖关系</li>
+<li>客户端可以构建和传递<em>优先级树</em>,表明如何接受响应_</li>
+<li>应先给父数据流分配资源</li>
+<li><p>同级数据源(相同父数据流)根据权重比例分配资源</p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_12-00-14.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p><strong>头部压缩</strong></p>
+<ul>
+<li><em>HPACK</em>压缩请求头和响应头(减少头部开销)</li>
+<li>早期版本HTTP/2和SPDY使用zlib压缩(压缩大小减少85%-88%,但有安全问题)</li>
+<li><p>不同请求的相同字段被压缩</p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_12-06-28.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p><strong>服务器推送,Server Push</strong></p>
+<ul>
+<li>服务器可以对一个客户端请求发送多个响应</li>
+<li><p>可以向客户端推送额外资源,而无需客户端明确的请求</p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_12-10-00.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>问题</p>
+<ul>
+<li><p><strong>队头堵塞</strong></p>
+<ul>
+<li><p>TCP协议只能一个一个处理数据包,如果队头丢失某一部分,将造成对头阻塞</p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_12-13-08.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p><strong>握手延迟</strong></p>
+<ul>
+<li>RTT,Round Trip Time,往返延迟<br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_12-14-34.jpg" alt=""></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="5.3"> 5.3 HTTP/3的改进</h5>
+
+<ul>
+<li>Google开发,<strong>弃用TCP协议,改为基于UDP协议的QUIC协议</strong></li>
+<li><p><em>HTTP-over-QUIC,2018年改为HTTP/3</em></p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_12-17-50.jpg" alt=""></p>
+</li>
+<li><p><strong>QUIC: 负责提供可靠传输</strong></p>
+</li>
+<li><p>特性</p>
+<ul>
+<li><p><strong>连接迁移</strong></p>
+<ul>
+<li><p>TCP基于4要素(源IP,源端口,目标IP,目标端口)</p>
+<pre><code>1. 切换网络时至少会有一个要素发生变化,导致连接发生变化
+2. 连接发生变化时,如果还使用原有TCP连接,会导致连接失败,就需要等原连接超时重连
+3. 切换新的网络或者发生网络变化时,建立新的连接仍需要几百毫秒甚至更久
+</code></pre></li>
+<li><p>QUIC的连接不受4要素的影响,4要素变更时,原连接扔维持</p>
+<pre><code>1. QUIC连接不以4要素为标识 以一组ConnectionID(连接ID)来标识一个连接
+2. 即使IP或者端口发生变化,ConnectionID没有发生变化,连接依然可以维持
+</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>问题</p>
+<ul>
+<li>内核,CPU负载过大<ul>
+<li>Linux内核的UDP部分未得到像TCP部分的优化</li>
+<li>TCP和TLS有硬件加速,但是对于UDP很罕见,对于QUIC更少</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<hr>
+<hr>
+<h3 id="6">6.其它协议</h3>
+
+<h5 id="6.1">6.1 WebSocket</h5>
+
+<ul>
+<li>基于<strong>TCP</strong>,支持全双工通信的<em>应用层协议</em></li>
+<li>客户端和服务器都可以主动发送消息给对方</li>
+<li><p>应用场景</p>
+<pre><code>1. 社交
+2. 股票基金报价
+3. 体育实况更新
+4. 多媒体聊天
+5. 多玩家游戏
+</code></pre></li>
+<li><p><strong>TCP本身是支持全双工通信</strong>,但是由于HTTP的<strong>请求应答模式</strong>限制TCP</p>
+</li>
+<li>端口<ul>
+<li>port:80 ws://</li>
+<li>port:443 wss://</li>
+</ul>
+</li>
+<li><p>与HTTP的区别</p>
+<ul>
+<li>需要先建立连接,一种有状态的协议,在之后通信时可以省略部分</li>
+<li>HTTP请求需要在每个请求都额外携带状态信息(如身份认证)</li>
+</ul>
+</li>
+<li><p>建立连接</p>
+<ul>
+<li>需要借助HTTP来建立连接,Handshake</li>
+<li><p>客户端主动发出握手请求</p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_17-01-32.jpg" alt=""></p>
+<blockquote>
+<p>Connection: 必须设置为Upgrade,表示客户端希望连接升级</p>
+</blockquote>
+<blockquote>
+<p>Upgrade: websocket, 表示希望升级为WebSocket协议</p>
+</blockquote>
+<blockquote>
+<p>Sec-WebSocket-Version: 表示支持的websocket版本</p>
+</blockquote>
+<blockquote>
+<p>Sec-WebSocket-Key: 客户端生成的随机字符串</p>
+</blockquote>
+</li>
+<li><p>服务器首页收到客户端的Sec-WebSocket-Key后</p>
+<ul>
+<li>Sec-WebSocket-Key加上一个固定的GUID值</li>
+<li>将结果进行SHA-1摘要计算</li>
+<li>在对摘要进行HexToBase64编码</li>
+<li>将编码结果作为Sec-WebSocket-Accept的响应头的值,返回给客户端</li>
+<li>目的: <em>避免普通的HTTP请求被误认为WebSocket协议</em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="6.2"> 6.2 WebService </h5>
+
+<ul>
+<li>Web服务,一种跨编程语言和跨操作系统的远程调用技术标准</li>
+<li><p>使用场景</p>
+<pre><code>1. 天气预报,手机归属地查询,物流信息查询等
+2. 物流信息,物流公司将自己地服务以WebService的形式暴露出来,让第三方调用
+</code></pre></li>
+<li>可以用普通的Web API取代(HTTP+JSON)</li>
+<li>核心概念<ul>
+<li><em>SOAP,Simple Object Access Protocol,简单对象访问协议</em></li>
+<li>很多时候: SOAP = HTTP + XML</li>
+<li>WebService使用SOAP协议来封装传递数据</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="6.3"> 6.3 RESTful </h5>
+
+<ul>
+<li>REpresentational State Transfer, 表现层状态转移</li>
+<li>REST: 是一种互联网软件架构设计风格<ul>
+<li>一组用于创建web服务的约束</li>
+<li>符合REST架构的Web服务,称为RESTful Web服务</li>
+</ul>
+</li>
+<li>建议<ul>
+<li>URL中使用名词(复数),不使用动词</li>
+<li>HTTP的方法表示动作</li>
+<li>一个资源连接到其他资源,使用子资源的形式</li>
+<li>返回JSON格式</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="6.4"> 6.4 HTTPDNS </h5>
+
+<ul>
+<li>基于HTTP协议向DNS服务器发送域名解析请求<ul>
+<li>替代了基于DNS协议向运营商local DNS发起解析请求的方式</li>
+<li>避免Local DNS造成的域名劫持和跨网访问问题</li>
+<li>常用在移动互联网中</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_17-23-10.jpg" alt=""></p>
+<hr>
+<h5 id="6.5"> 6.5 FTP </h5>
+
+<ul>
+<li>文件传输协议,File Transport Protocol</li>
+<li>基于TCP的应用层协议</li>
+<li><p><em>固定的URL格式</em></p>
+</li>
+<li><p>连接模式: <em>主动active和被动passive</em></p>
+<ul>
+<li><strong>都需要建立两个连接,控制连接和数据连接</strong></li>
+<li>控制连接: 用于传输状态信息,命令,cmd</li>
+<li>数据连接: 用于传输文件和目录信息,data</li>
+</ul>
+</li>
+<li><p><strong>主动模式</strong></p>
+<ul>
+<li>客户端打开一个随机命令端口<ul>
+<li>端口号大于1024,假设为N</li>
+<li>同时连接至服务器的命令端口21</li>
+</ul>
+</li>
+<li><p>客户端开始监听N+1数据端口</p>
+<ul>
+<li><p>同时向服务器发送一个port命令给服务器命令端口21</p>
+<pre><code>1. 此命令告诉服务器,客户端正在监听数据端口N+1
+2. 且已准备好从此端口接收数据
+</code></pre></li>
+</ul>
+</li>
+<li><p>服务器打开20数据端口,创建于客户端(N+1)端口的连接</p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_17-33-48.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p><strong>被动模式</strong></p>
+<ul>
+<li>客户端的命令端口N用于服务器命令端口21</li>
+<li>客户端通过命令端口N发送<em>PASV</em>命令给服务器的命令端口21</li>
+<li>服务器打开一个随机端口P,并告知客户端该端口号P</li>
+<li><p>客户端数据端口N+1发起与服务端数据端口P的连接</p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_21-29-56.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="6.6"> 6.6 邮件协议 </h5>
+
+<ul>
+<li><p>发送邮件</p>
+<ul>
+<li><p>SMTP,Simple Mail Transfer Protocol,简单邮件传输协议</p>
+<pre><code>1. 基于TCP
+2. 服务器默认使用25端口,SSL/TLS使用465端口
+</code></pre></li>
+</ul>
+</li>
+<li><p>接收邮件</p>
+<ul>
+<li><p>POP, Post Office Protocol</p>
+<pre><code>1. 基于TCP
+2. 最新版本是POP3
+3. 服务器默认使用110端口,SSL/TLS使用995端口
+</code></pre></li>
+<li><p>IMAP, Internet Message Access Protocol,信息访问协议</p>
+<pre><code>1. 基于TCP
+2. 服务器默认使用143端口,SSL/TLS使用993端口
+</code></pre><p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_21-37-46.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>POP和IMAP区别</p>
+<ul>
+<li><p>POP</p>
+<ul>
+<li>客户端连接服务器时,会从服务器下载所有邮件</li>
+<li>客户端的操作(删除邮件,移动文件夹等)_不会_和服务器同步</li>
+<li>每个客户端都是独立的,都可以获得自己的电子邮件副本</li>
+</ul>
+</li>
+<li><p>IMAP</p>
+<ul>
+<li>客户端连接服务器时,获取的是服务器上邮件的基本信息,并不会下载邮件(<em>具体打开邮件时,才开始下载邮件</em>)</li>
+<li>客户端的操作(删除邮件,移动文件夹等)_会_和服务器同步</li>
+<li>所有客户端始终会看到相同的邮件和相同的文件夹</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="6.7"> 6.7 IPv6 </h5>
+
+<ul>
+<li>IPv4: 32位地址</li>
+<li><p>IPv6: 128位地址</p>
+</li>
+<li><p>地址格式</p>
+<ul>
+<li>128位,每16位一组,共8组</li>
+<li><em>每组以冒号相隔,每组以4位16进制方式表示</em></li>
+<li>也可以使用点分十六进制</li>
+<li><p><em>每组前面连续的0可以省略</em></p>
+<pre><code>1. 2001:0db8:02de:0000:0000:xxxxxx......
+2. 2001:db8:2de:0:0:xxxxxx.......
+3. 两者等价
+</code></pre></li>
+<li><p><em>可以用双冒号::表示一组0或者多组连续的0</em>,<strong>只能出现一次</strong></p>
+<pre><code>1. 2001:db8:2de:0:0:0:0:e13
+2. 2001:db8:2de::e13
+3. 两者等价
+</code></pre></li>
+<li><strong>::1</strong>本都环回地址(0:0:0:0:0:0:0:1)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>首部格式</li>
+</ul>
+<pre><code>![](https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-28_21-55-56.jpg)
+
++ 40字节固定首部
++ **Version**: 版本号
++ **Traffic Class**: 交通类别
+
+        1. 数据包的类别和优先级,帮助路由器根据优先级处理
+        2. 如果路由器发生拥塞,优先级最低的数据包会被丢弃
++ **Payload Length**: 有效负载长度
+
+        1. 16bit
+        2. 包含扩展头部,传输层数据的长度
++ **Hop Limit**: 跳数限制
+    + 与IPv4中的TTL相同
++ **Source Address**: 源IPv6地址
++ **Destination Address**: 目标IPv6地址
++ **Flow Label**: 流标签
+
+        1. 指示数据包属于哪个特定序列
+        2. 源地址,目标地址和流标签标识一个数据流
+
++ 扩展头部: **Next Header**, 下一个头部
+</code></pre><hr>
+<h5 id="6.8"> 6.8 即时通信 </h5>
+
+<ul>
+<li>Instant Messaging,IM</li>
+<li>IM云服务: 网易云信, 腾讯云, 环信</li>
+<li>常用的协议<ul>
+<li>XMPP</li>
+<li>MQTT</li>
+<li>自定义协议</li>
+</ul>
+</li>
+<li><p><strong>XMPP</strong></p>
+<ul>
+<li>可扩展消息与存在协议</li>
+<li>基于TCP</li>
+<li>默认端口是: <strong>5222,5269</strong></li>
+<li>特点<ul>
+<li>XML格式传输,体积大</li>
+<li>技术成熟</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>MQTT</strong></p>
+<ul>
+<li>消息队列遥测传输</li>
+<li>基于TCP</li>
+<li>默认端口是: <strong>1883,8883</strong></li>
+<li>特点<ul>
+<li>开销小,信息冗余小</li>
+<li>需要自己实现功能</li>
+<li><em>最适合物联网,loT,网络协议</em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="6.9"> 6.9 流媒体 </h5>
+
+<ul>
+<li><p>流式媒体,Streaming Media</p>
+<blockquote>
+<p>将连续的多媒体数据压缩后,经过互联网分段发送,在互联网上计时传输影音</p>
+</blockquote>
+</li>
+<li><p>常见协议</p>
+<ul>
+<li><p>RTP,Real-Time Transport Protocol, 实时传输协议</p>
+<blockquote>
+<p>基于UDP</p>
+</blockquote>
+</li>
+<li><p>RTCP,Real-Time Transport Control Protocol,实时传输控制协议</p>
+<blockquote>
+<p>基于UDP,使用RTP的下一个端口</p>
+</blockquote>
+</li>
+<li><p>RTSP,Real-Time Streaming Protocol,实时流协议</p>
+<blockquote>
+<p>基于TCP,UDP的554端口</p>
+</blockquote>
+</li>
+<li><p>RTMP,Real-Time Messaging Protocol,实时消息协议</p>
+<blockquote>
+<p>基于TCP的1935端口</p>
+</blockquote>
+</li>
+<li><p>HLS,HTTP Live Streaming</p>
+<blockquote>
+<ol>
+<li>基于HTTP的流媒体网络传输协议</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>苹果公司出品</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<hr>
+<hr>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/16/指数基金投资指南-书摘/" rel="next" title="指数基金投资指南-书摘.md">
+                <i class="fa fa-chevron-left"></i> 指数基金投资指南-书摘.md
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/04/14/《炒股的智慧》书摘/" rel="prev" title="《炒股的智慧》书摘">
+                《炒股的智慧》书摘 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/blackCat.png"
+                alt="LiuXiao" />
+            
+              <p class="site-author-name" itemprop="name">LiuXiao</p>
+              <p class="site-description motion-element" itemprop="description">An iOS programmer, a blog chronicling the life and learning process, content with learning , think , life snippets , cats and you</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#目录"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1"><span class="nav-number">2.</span> <span class="nav-text">1. 应用层协议: DNS &amp; DHCP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1.1"><span class="nav-number">2.0.1.</span> <span class="nav-text">1.1 DNS</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1.2"><span class="nav-number">2.0.2.</span> <span class="nav-text">1.2 DHCP </span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2"><span class="nav-number">3.</span> <span class="nav-text">2. HTTP </span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2.1"><span class="nav-number">3.0.1.</span> <span class="nav-text">2.1 版本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2.2"><span class="nav-number">3.0.2.</span> <span class="nav-text">2.2 报文格式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2.3"><span class="nav-number">3.0.3.</span> <span class="nav-text">2.3 请求方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2.4"><span class="nav-number">3.0.4.</span> <span class="nav-text">2.4 头部字段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2.5"><span class="nav-number">3.0.5.</span> <span class="nav-text">2.5 状态码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2.6"><span class="nav-number">3.0.6.</span> <span class="nav-text">2.6 代理服务器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2.7"><span class="nav-number">3.0.7.</span> <span class="nav-text">2.7 CDN</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2.8"><span class="nav-number">3.0.8.</span> <span class="nav-text">2.8 Cache </span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3"><span class="nav-number">4.</span> <span class="nav-text">3. 网络安全 </span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3.1"><span class="nav-number">4.0.1.</span> <span class="nav-text">3.1 网络层安全威胁</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3.2"><span class="nav-number">4.0.2.</span> <span class="nav-text">3.2 传输层安全威胁</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3.3"><span class="nav-number">4.0.3.</span> <span class="nav-text">3.3 应用层安全威胁</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3.4"><span class="nav-number">4.0.4.</span> <span class="nav-text">3.4 加密方式:不可逆加密-单向散列函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3.5"><span class="nav-number">4.0.5.</span> <span class="nav-text">3.5 加密方式:可逆加密</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-5-1-对称加密"><span class="nav-number">4.0.6.</span> <span class="nav-text">3.5.1 对称加密</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-5-2-非对称加密"><span class="nav-number">4.0.7.</span> <span class="nav-text">3.5.2 非对称加密</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3.6"><span class="nav-number">4.0.8.</span> <span class="nav-text">3.6 加密方式:混合密码系统</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3.7"><span class="nav-number">4.0.9.</span> <span class="nav-text">3.7 加密方式:数字签名</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3.8"><span class="nav-number">4.0.10.</span> <span class="nav-text"> 3.8 加密方式:证书</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4"><span class="nav-number">5.</span> <span class="nav-text">4. HTTPS </span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4.1"><span class="nav-number">5.0.1.</span> <span class="nav-text"> 4.1 简介 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4.2"><span class="nav-number">5.0.2.</span> <span class="nav-text"> 4.2 连接过程 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-1-连接过程"><span class="nav-number">5.0.3.</span> <span class="nav-text">4.2.1 连接过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5"><span class="nav-number">6.</span> <span class="nav-text">5.HTTP的升级改进</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#5.1"><span class="nav-number">6.0.1.</span> <span class="nav-text"> 5.1 HTTP/1.1的不足</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5.2"><span class="nav-number">6.0.2.</span> <span class="nav-text"> 5.2 HTTP/2的改进</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5.3"><span class="nav-number">6.0.3.</span> <span class="nav-text"> 5.3 HTTP/3的改进</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6"><span class="nav-number">7.</span> <span class="nav-text">6.其它协议</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#6.1"><span class="nav-number">7.0.1.</span> <span class="nav-text">6.1 WebSocket</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6.2"><span class="nav-number">7.0.2.</span> <span class="nav-text"> 6.2 WebService </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6.3"><span class="nav-number">7.0.3.</span> <span class="nav-text"> 6.3 RESTful </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6.4"><span class="nav-number">7.0.4.</span> <span class="nav-text"> 6.4 HTTPDNS </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6.5"><span class="nav-number">7.0.5.</span> <span class="nav-text"> 6.5 FTP </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6.6"><span class="nav-number">7.0.6.</span> <span class="nav-text"> 6.6 邮件协议 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6.7"><span class="nav-number">7.0.7.</span> <span class="nav-text"> 6.7 IPv6 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6.8"><span class="nav-number">7.0.8.</span> <span class="nav-text"> 6.8 即时通信 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6.9"><span class="nav-number">7.0.9.</span> <span class="nav-text"> 6.9 流媒体 </span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LiuXiao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
