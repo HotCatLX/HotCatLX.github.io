@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+<meta name="baidu-site-verification" content="bQc1gZn8SE" />
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+
+
+
+
+  <meta name="keywords" content="iOS," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="目录 1.基本介绍 1.1 网络互联模型 1.2 同一网段,同一广播域计算机连接方式 1.3 不同网段,不同广播域计算机连接方式   2.MAC地址&amp;amp;IP地址 2.1 MAC地址 2.2 IP地址 2.3 子网掩码   3.路由 3.1 概念 3.2 公网IP&amp;amp;私网IP   4.物理层和数据链路层 4.1 物理层 4.2 数据链路层   5.网络层 6.传输层 6.1 UDP协议">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络协议笔记(一)">
+<meta property="og:url" content="http://yoursite.com/2021/04/14/网络协议笔记/index.html">
+<meta property="og:site_name" content="HotCatLX Blog">
+<meta property="og:description" content="目录 1.基本介绍 1.1 网络互联模型 1.2 同一网段,同一广播域计算机连接方式 1.3 不同网段,不同广播域计算机连接方式   2.MAC地址&amp;amp;IP地址 2.1 MAC地址 2.2 IP地址 2.3 子网掩码   3.路由 3.1 概念 3.2 公网IP&amp;amp;私网IP   4.物理层和数据链路层 4.1 物理层 4.2 数据链路层   5.网络层 6.传输层 6.1 UDP协议">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA/cute_cat_3-wallpaper-1920x1200.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2020-11-17_01-21-53.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2020-11-25_01-54-29.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2020-11-22_21-05-11.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2020-11-22_21-39-51.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2020-11-22_21-40-00.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2020-11-23_01-20-32.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2020-11-23_01-20-40.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-15_11-28-37.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-15_11-28-53.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2020-11-26_01-36-16.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2020-11-26_01-39-24.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-15_15-37-43.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-15_15-47-00.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-15_16-14-53.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-15_17-08-59.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_15-07-15.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_15-14-52.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_15-18-25.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_15-23-44.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_15-27-36.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_18-52-52.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_18-53-02.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_18-53-45.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_18-53-53.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_18-54-44.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_16-45-59.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_16-46-31.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_17-20-40.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_17-20-52.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_17-33-00.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_18-34-07.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_18-41-01.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_19-04-58.jpg">
+<meta property="og:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-18_00-50-26.jpg">
+<meta property="og:updated_time" content="2021-04-13T17:51:13.408Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网络协议笔记(一)">
+<meta name="twitter:description" content="目录 1.基本介绍 1.1 网络互联模型 1.2 同一网段,同一广播域计算机连接方式 1.3 不同网段,不同广播域计算机连接方式   2.MAC地址&amp;amp;IP地址 2.1 MAC地址 2.2 IP地址 2.3 子网掩码   3.路由 3.1 概念 3.2 公网IP&amp;amp;私网IP   4.物理层和数据链路层 4.1 物理层 4.2 数据链路层   5.网络层 6.传输层 6.1 UDP协议">
+<meta name="twitter:image" content="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA/cute_cat_3-wallpaper-1920x1200.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/04/14/网络协议笔记/"/>
+
+
+
+
+
+  <title>网络协议笔记(一) | HotCatLX Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HotCatLX Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Recording Life & Study</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/04/14/网络协议笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LiuXiao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/blackCat.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HotCatLX Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">网络协议笔记(一)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-14T01:50:02+08:00">
+                2021-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA/cute_cat_3-wallpaper-1920x1200.jpg" alt=""></p>
+<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><ul>
+<li><a href="#1">1.基本介绍</a><ul>
+<li><a href="#1.1">1.1 网络互联模型</a></li>
+<li><a href="#1.2">1.2 同一网段,同一广播域计算机连接方式</a></li>
+<li><a href="#1.2">1.3 不同网段,不同广播域计算机连接方式</a></li>
+</ul>
+</li>
+<li><a href="#2">2.MAC地址&amp;IP地址</a><ul>
+<li><a href="#2.1">2.1 MAC地址</a></li>
+<li><a href="#2.2">2.2 IP地址</a></li>
+<li><a href="#2.3">2.3 子网掩码</a></li>
+</ul>
+</li>
+<li><a href="#3">3.路由</a><ul>
+<li><a href="#3.1">3.1 概念</a></li>
+<li><a href="#3.2">3.2 公网IP&amp;私网IP</a></li>
+</ul>
+</li>
+<li><a href="#4">4.物理层和数据链路层</a><ul>
+<li><a href="#4.1">4.1 物理层</a></li>
+<li><a href="#4.2">4.2 数据链路层</a></li>
+</ul>
+</li>
+<li><a href="#5">5.网络层</a></li>
+<li><a href="#6">6.传输层</a><ul>
+<li><a href="#6.1">6.1 UDP协议</a></li>
+<li><a href="#6.2">6.2 TCP首部</a></li>
+<li><a href="#6.3">6.3 TCP:可靠传输</a></li>
+<li><a href="#6.4">6.4 TCP:流量控制</a></li>
+<li><a href="#6.5">6.5 TCP:拥塞控制</a></li>
+<li><a href="#6.6">6.6 TCP:建立连接</a></li>
+<li><a href="#6.7">6.7 TCP:释放连接</a></li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<hr>
+<h3 id="1">1. 基本介绍</h3>
+
+
+<hr>
+<h5 id="1.1">1.1 网络互连模型</h5>
+
+<ul>
+<li><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2020-11-17_01-21-53.jpg" alt=""></li>
+</ul>
+<hr>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2020-11-25_01-54-29.jpg" alt=""></p>
+<pre><code>- 应用层: Application
+    * 协议: FTP, HTTP, SMTP, DNS, DHCP
+    * 报文,用户数据
+- 运输层: Transport
+    * 协议: TCP, UDP
+    * 段, segments
+- 网络层: Network
+    * 协议: IP
+    * 包,Packet
+- 数据链路层: Data Link
+    * 帧(Frames)
+- 物理层: Physical
+    * 比特流(Bits)
+</code></pre><hr>
+<h5 id="1.2">1.2 同一网段,同一广播域计算机连接方式</h5>
+
+<ul>
+<li><p>通信基础</p>
+<pre><code>1. 知道对方的IP地址
+2. 最终是根据MAC地址传输数据到网卡,被网卡接收
+    2.1 如果网卡发现MAC地址是自己的地址,会传输到上一层进行处理
+    2.2 如果网卡发现MAC地址不是自己,则会将数据丢弃
+</code></pre></li>
+<li><p>网线直连</p>
+<blockquote>
+<p>需要使用交叉线</p>
+</blockquote>
+</li>
+<li><p>同轴电缆</p>
+<pre><code>1. 半双工通信
+2. 容易冲突,不安全
+</code></pre></li>
+<li>集线器(Hub)</li>
+</ul>
+<pre><code>1. 集线器,没有智商,没有存储功能(和同轴电缆一样)
+2. 半双工通信
+</code></pre><ul>
+<li>网桥(Bridge)</li>
+</ul>
+<pre><code>1. 可以知道两侧接口的MAC地址
+2. 起到隔绝冲突域的作用
+</code></pre><ul>
+<li><p>交换机(Switch)</p>
+<pre><code>1. 相当于接口更多的网桥
+2. 全双工通信
+3. 比集线器安全
+</code></pre></li>
+</ul>
+<hr>
+<h5 id="1.3">1.3 不同网段,不同广播域计算机连接方式</h5>
+
+<ul>
+<li><p>路由器(Router)</p>
+<pre><code>1. 可以在不同的网段之间转发数据
+2. 隔绝广播域
+</code></pre></li>
+</ul>
+<hr>
+<hr>
+<hr>
+<h3 id="2">2. MAC地址 &amp; IP地址</h3>
+
+<h5 id="2.1">2.1 MAC地址</h5>
+
+<ul>
+<li><p>MAC地址: </p>
+<pre><code>1. 6字节,48bit;全球唯一
+2. 固化在网卡的ROM中
+3. 前三个字节: 组织唯一标识符,厂商的标志,OUI
+4. 后三个字节: 网络接口标识符,由厂商分配
+5. 当48位全部为1是,代表广播地址:FF:FF:FF:FF:FF:FF
+</code></pre></li>
+</ul>
+<pre><code>&gt; _KP:  广播地址**(FF:FF:FF:FF:FF:FF)**_
+</code></pre><ul>
+<li><p>MAC地址的获取</p>
+<pre><code>1. 当不知道别人的MAC地址的时候,可以发送**ARP广播来获取对方的MAC地址**
+2. 获取成功后,会缓存IP地址,MAC地址映射信息,称为ARP缓存
+3. 通过ARP广播获取的MAC地址,属于动态缓存(时间较短,默认两分钟后删除)
+</code></pre><blockquote>
+<p><em>KP: <strong>发送ARP广播来获取对方MAC地址</strong></em></p>
+</blockquote>
+</li>
+<li><p>ARP协议</p>
+<pre><code>1. 地址解析协议,Address resolution Protocol
+2. 通过IP地址获取MAC地址
+</code></pre></li>
+</ul>
+<hr>
+<h5 id="2.2">2.2 IP地址</h5>
+
+<ul>
+<li><strong>IPv4:32bit,4字节</strong></li>
+<li><strong>IPv6:128bit,16字节</strong></li>
+<li><p>IP地址组成</p>
+<pre><code>1. 互联网上的每一个主机都有一个IP地址
+2. 由网络标识(网络ID),主机标识(主机ID)组成;通过子网掩码可以知道网络ID和主机ID
+3. 主机的网段: **子网掩码&amp;IP地址**
+4. 通信前会判断目标主机和自己是否在同一网段,不在同一网段需要交给路由器处理
+</code></pre></li>
+</ul>
+<h6 id="2-2-1-IP地址分类"><a href="#2-2-1-IP地址分类" class="headerlink" title="2.2.1 IP地址分类"></a>2.2.1 IP地址分类</h6><ul>
+<li><p>前提</p>
+<pre><code>1. 只有A,B,C类地址才可以分配给主机
+2. 如果主机ID全为0,表示主机所在的网段
+3. 如果主机ID全为1,表示主机所在网段的全部主机(广播)
+</code></pre><blockquote>
+<p><em>KP: 主机ID全部为0,表示主机所在网段</em></p>
+</blockquote>
+<blockquote>
+<p><em>KP: 主机ID全部为1,表示主机所在网段的全部主机(广播)</em></p>
+</blockquote>
+</li>
+<li><p>A类地址</p>
+<ul>
+<li>默认子网掩码是<strong>255.0.0.0</strong></li>
+<li><p><strong>网络ID:8位(0开头),主机ID:24位</strong></p>
+<pre><code>网络ID: 0不可用,127作为保留网段;其中127.0.0.1是本地环回地址,代表本机地址
+网络ID: 可以分配给主机的取值为1-126
+</code></pre></li>
+<li><p>主机ID: 第2,3,4部分的取值范围是: <strong>0-255</strong></p>
+</li>
+<li><p>每个A类网络能容纳的最大<strong>主机</strong>数为</p>
+<blockquote>
+<p>256 <em> 256 </em> 256 - 2 = 2^24 - 2 = 16777214</p>
+</blockquote>
+<p><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2020-11-22_21-05-11.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p>B类地址</p>
+<ul>
+<li>默认子网掩码是<strong>255.255.0.0</strong></li>
+<li><p><strong>网络ID: 16位(10开头),主机ID: 16位</strong></p>
+<pre><code>网络ID: 第一个字节可以分配的为 128-191
+网络ID: 第二个字节可以分配的为 0-255
+</code></pre></li>
+<li><p>主机ID: 第3,4部分的取值范围是0-255</p>
+</li>
+<li><p>每个B类网络能容纳的最大<strong>主机</strong>数为</p>
+<blockquote>
+<p>256 * 256  - 2 = 2^16 - 2 = 65534</p>
+</blockquote>
+<p><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2020-11-22_21-39-51.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p>C类地址</p>
+<ul>
+<li>默认子网掩码是:<strong>255.255.255.0</strong></li>
+<li><strong>网络ID: 24位(110开头),主机ID: 8位</strong></li>
+<li><p>网络ID: <strong>110</strong>开头</p>
+<pre><code>网络ID: 可以分配给主机的第一部分,第一个字节的取值范围是 192-223
+网络ID: 第2,3部分的取值范围是0-255
+</code></pre></li>
+<li>主机ID: 第四部分的取值范围是 0-255</li>
+<li><p>每个C类网络能容纳的最大主机数是: </p>
+<blockquote>
+<p><strong>256-2=254</strong></p>
+</blockquote>
+<p><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2020-11-22_21-40-00.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p>D类地址    </p>
+<ul>
+<li>没有<strong>子网掩码,用于多播,组播地址</strong></li>
+<li><strong>网络ID: 32位(110开头)</strong></li>
+<li><p>第一个字节取值为: <strong>224-239</strong></p>
+<p><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2020-11-23_01-20-32.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p>E类地址</p>
+<ul>
+<li><strong>网络ID: 32位(1111开头)</strong></li>
+<li>保留为以后使用</li>
+<li><p>第一个字节地址为: <strong>240-255</strong></p>
+<p><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2020-11-23_01-20-40.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="2.3">2.3 子网掩码</h5>
+
+<ul>
+<li>CIDR: 无类别域间路由,Classless Inter-Domain Routing</li>
+<li><p>表示方法</p>
+<blockquote>
+<p>192.168.1.100/24,代表子网掩码有24个1,也就是255.255.255.0</p>
+</blockquote>
+<blockquote>
+<p>123.210.100.200/16,代表子网掩码有16个1,也就是255.255.0.0</p>
+</blockquote>
+</li>
+<li><p>如何避免浪费IP地址 -&gt; 合理进行子网划分</p>
+</li>
+<li>子网划分<ul>
+<li><strong>借用主机位作子网位,划分出多个子网</strong>,等长子网划分+变长子网划分两种形式</li>
+<li>步骤<ul>
+<li>确定子网的子网掩码长度</li>
+<li>确定子网中你那个第一个和最后一个主机可用的IP地址</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<hr>
+<hr>
+<h3 id="3">3. 路由</h3>
+
+<h5 id="3.1">3.1 概念</h5>
+
+<ul>
+<li>在不同的网段之间转发数据,需要<em>路由器</em>的支持</li>
+<li><p>静态路由</p>
+<pre><code>1. 管理员手动添加的路由信息
+2. 适用于小规模网络
+</code></pre></li>
+<li><p>动态路由</p>
+<pre><code>1. 路由器通过路由选择协议(RIP,OSPF),自动获取路由信息
+2. 适合大规模网络
+</code></pre></li>
+</ul>
+<ul>
+<li><p>互联网(internet);最大的互联网: <em><strong>因特网(Internet)</strong></em></p>
+</li>
+<li><p>ISP(服务提供商): Internet Service Provider</p>
+</li>
+<li><p>网络分类</p>
+<ul>
+<li>按照网络范围进行分类,可分为: <strong>局域网,城域网,广域网</strong></li>
+<li><p>局域网(<em>LAN,Local Area Network</em>)</p>
+<pre><code>1. 一般是范围在几百米到十几公里的计算机网络
+2. 局域网中最广泛的技术是,以太网 Ethernet
+</code></pre></li>
+<li><p>城域网(<em>MAN, Metropolitan Area Network</em>)</p>
+<pre><code>1. 一般可以覆盖一个城市
+</code></pre></li>
+<li><p>广域网(<em>WAN, Wide Area Network</em>)</p>
+<pre><code>1. 一般都需要租用ISP路线
+</code></pre></li>
+</ul>
+</li>
+<li><p>上网方式</p>
+<pre><code>1. 猫(Modem),用于ADSL(电话线上网),将数字信号和模拟信号转换
+2. 光猫(Optical Modem),光调制解调器,用于光纤入户使用,将数字信号和光信号进行转换
+</code></pre></li>
+</ul>
+<hr>
+<h5 id="3.2">3.2 公网IP&amp;私网IP</h5>
+
+<ul>
+<li><p>IP地址分为公网IP,私网IP</p>
+<ul>
+<li><p>公网IP</p>
+<pre><code>1. Internet上的路由器只有到达公网的路由表,没有到达私网的路由表
+2. 公网IP由Internet NIC,_统一分配和管理_
+3. ISP需要申请公网IP
+</code></pre></li>
+<li><p>私网IP</p>
+<pre><code>1. 主要用于局域网
+2. A类网络保留私网网段: 10.0.0.0/8, 1个A类网络
+3. B类网络保留私网网段: 172.16.0.0/16 - 173.31.0.0/16, 16个B类网络
+4. C类网络保留私网网段: 192.168.0.0/24 - 192.168.255.0/24, 256个C类网络
+</code></pre></li>
+</ul>
+</li>
+<li><p>NAT(Network Address Translation)</p>
+<ul>
+<li><em>私网IP访问Internet需要进行NAT转换为公网IP</em></li>
+<li><strong>由路由器来完成</strong></li>
+<li><p>特点</p>
+<pre><code>1. 可以节约公网IP地址
+2. 可以隐藏内部IP
+</code></pre></li>
+<li><p>分类</p>
+<ul>
+<li>静态转换: <em>手动配置NAT映射表,一对一转换</em></li>
+<li>动态转换: <em>定义外部地址池,动态随机转换,一对一转换</em></li>
+<li><p>PAT(Port Address Translation): <strong>目前主要应用</strong></p>
+<pre><code>1. 多对一转换,最大程度节约公网IP资源
+2. 端口多路复用,通过端口号标示不同的数据流
+3. 目前应用最广泛的NAT实现方式
+</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<hr>
+<hr>
+<h3 id="4">4. 物理层和数据链路层</h3>
+
+
+<h5 id="4.1">4.1 物理层</h5>
+
+<ul>
+<li>物理层定义了: 接口标准,线缆标准,传输速率,传输方式</li>
+<li><p>模拟信号</p>
+<pre><code>1. 适合长距离传输,连续的信号
+2. 抗干扰能力差,受到干扰时波形变动难以纠正
+</code></pre></li>
+<li><p>数字信号</p>
+<pre><code>1. 不适合长距离传输,离散的信号
+2. 抗干扰能力强,受到干扰时波形失真可修复
+</code></pre></li>
+<li><p>数据通信模型</p>
+<ul>
+<li>局域网: 网线长度不能超过100m<br><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-15_11-28-37.jpg" alt=""></li>
+<li>广域网:(数字信号-模拟信号-数字信号)<br><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-15_11-28-53.jpg" alt=""></li>
+</ul>
+</li>
+<li><p>信道(channel)</p>
+<ul>
+<li>信息传输的通道,一条传输介质(网线),可以有多条信道</li>
+<li><p>单工通信</p>
+<pre><code>1. 信号只能朝着一个方向传输,且不能改变传输方向
+2. 使用场景: 无线电广播,有线电视广播
+</code></pre></li>
+<li><p>半双工通信</p>
+<pre><code>1. 信号可以双向传输
+2. 但是必须是交替进行,同一时间只能一个方向传输
+3. 使用场景: 对讲机
+</code></pre></li>
+<li><p>全双工通信</p>
+<pre><code>1. 信号可以同时双向传输
+2. 使用场景: 电话
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="4.2">4.2 数据链路层</h5>
+
+<ul>
+<li>链路: 从一个节点到相邻节点的一段<strong>物理</strong>线路(有线或者无线),<strong>中间没有其他交换节点</strong></li>
+<li>一条链路上传输数据,需要<strong>对应的通信协议来控制数据的传输</strong></li>
+<li><p>不同类型的数据链路,所用的通信协议可能是不同的</p>
+<pre><code>1. 广播通道: CSMA/CD协议        
+2. 点对点信道: PPP协议
+</code></pre></li>
+<li><p>3个基本问题        </p>
+<ul>
+<li><p><em>封装成帧</em><br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2020-11-26_01-36-16.jpg" alt=""></p>
+<pre><code>1. 最大传输单元(MTU),每一种数据链路层协议都规定了传送帧的数据部分的长度上限
+2. 以太网的MTU为1500字节
+</code></pre></li>
+<li><p><em>透明传输</em><br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2020-11-26_01-39-24.jpg" alt=""></p>
+<pre><code>1. SOH(start of header),作为帧开始符
+2. EOT(end of transmission),作为帧的结束符
+3. 数据部分一旦出现EOT,就需要进行转义(填充字节,在接收端去除转义字符)
+</code></pre></li>
+<li><p>差错检验(FCS)</p>
+<pre><code>1. FCS是根据数据部分+数据链路层首部计算出来  
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>CSMA/CD协议<ul>
+<li>载波侦听多路访问/冲突检测</li>
+<li>使用了CSMA/CD的网络可以称为以太网,传输的是以太网帧</li>
+<li>格式: <em>Ethernet V2(使用广泛) &amp; IEEE802.3</em></li>
+<li>为了检测正在发送的帧数据是否发生了冲突,以太网的帧至少要<em><strong>64字节</strong></em></li>
+<li>用交换机组建的网络,已经支持全双工通信,不需要再使用CSMA/CD,但是传输的帧依然是<em>以太网帧</em></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>Ethernet V2<br>  -格式</p>
+<pre><code>![](https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/2021-02-15_10-19-46.jpg)
+
+    1. 首部: 目标MAC + 源MAC + 网络类型
+    2. 以太网帧: 首部 + 数据部分 + FCS
+    3. 数据的长度最小为 64 - 6(目标MAC) - 6(源MAC) - 2(网络类型) - 4(FCS) = 46字节
+    4. 当数据部分长度小于46字节时,数据链路层会在数据部分在一些填充
+![](https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/2021-02-15_10-21-19.jpg)
+</code></pre><ul>
+<li><p>长度总结</p>
+<pre><code>1. 以太网帧的数据长度: 46-1500字节
+2. 以太网帧的长度: 64-1518字节 (18字节为:目标MAC+源MAC+网络类型+FCS)
+</code></pre></li>
+</ul>
+</li>
+<li><p>网卡</p>
+<blockquote>
+<p> 负责功能: 帧的封装与拆封,帧的差错校验,介质访问控制</p>
+</blockquote>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-15_15-37-43.jpg" alt=""></p>
+<pre><code>1. 网卡接收到一个帧,会先进行差错校验,校验通过则接收,负责则丢弃
+2. 接收到的帧,硬件会去除帧尾的FCS信息
+3. 抓包工具抓不到差错校验失败的工具
+</code></pre></li>
+<li><p>PPP协议(Point to Point Protocol)</p>
+<ul>
+<li><p>点对点协议帧首部不需要: <em>目标MAC和源MAC</em><br><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-15_15-47-00.jpg" alt=""></p>
+<pre><code>1. Address字段: 0xFF,没有实际意义,不需要目标MAC和源MAC
+2. Control字段: 0x03,目前没有作用
+3. Protocol字段
+4. 帧开始符,结束符: 0x7E,如果帧数据内容部分有0x7E内容也需要做内容填充
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<hr>
+<hr>
+<hr>
+<h3 id="5">5. 网络层</h3>
+
+<ul>
+<li><p>网络层数据包(IP数据包,Packet),由数据和首部两部分组成</p>
+<blockquote>
+<p>数据部分多为传输层传下来的数据段(segment)</p>
+</blockquote>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-15_16-14-53.jpg" alt=""></p>
+</li>
+</ul>
+<ul>
+<li><p><em>网络层首部: 版本</em></p>
+<pre><code>1. 4位
+2. IPv4(0b0100) || IPv6(0b0110)
+</code></pre></li>
+<li><p><em>网络层首部: 首部长度</em></p>
+<pre><code>1. 4位,二进制值乘以4才是最终长度
+2. 最小值: 0b0101 -&gt; 20
+3. 最大值: 0b1111 -&gt; 60
+</code></pre></li>
+<li><p><em>网络层首部: 区分服务</em></p>
+<pre><code>1. 8位
+2. 用途: 提高网络服务质量
+</code></pre></li>
+<li><p><em>网络层首部: 总长度</em></p>
+<pre><code>![](https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-15_16-40-43.jpg)
+
+1. 16位
+2. 首部+数据的长度之和,最大值为65535
+3. 网络层的数据部分和首部成为数据链路层帧的数据部分
+4. 帧的数据部分不能超过1500字节,过大的IP数据包需要分片(fragment)传给数据链路层
+5. 分片后每一片fragment都有自己的数据层首部
+</code></pre></li>
+</ul>
+<ul>
+<li><p><em>网络层首部: 标识</em></p>
+<pre><code>1. 16位,数据包的ID
+2. 当一个数据包过大时,分片后每一片的标识ID都一样
+3. 由专门计数器管理数据包ID,每发送一个数据包.ID+1
+</code></pre></li>
+</ul>
+<ul>
+<li><p><em>网络层首部: 标志</em></p>
+<pre><code>1. 3位,主要用于处理分片信息
+2. 第一位,保留
+3. 第二位(DF,Don&apos;t Fragment): 0代表允许分片,1代表不允许分片
+4. 第三位(MF, More Fragments): 0表示是最后一片,1表示不是最后一片
+</code></pre></li>
+</ul>
+<ul>
+<li><p><em>网络层首部: 片偏移</em></p>
+<pre><code>1. 13位
+2. 片偏移乘以8,字节偏移
+3. 每一片的长度一定是8的整数倍
+</code></pre><blockquote>
+<p><em>KP: 每一片的长度一定是8的整数倍</em></p>
+<pre><code>![](https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-15_16-58-36.jpg) 
+</code></pre></blockquote>
+</li>
+<li><p><em>网络层首部: 生存时间</em></p>
+<pre><code>1. 8位,Time To Live
+2. 每个路由器转发之前会将TTL减1,一旦TTL减为0,路由器会返回错误报告
+</code></pre></li>
+<li><p><em>网络层首部: 协议</em></p>
+<pre><code>1. 8位
+2. 表明所封装的数据是使用了什么协议
+</code></pre><p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-15_17-08-59.jpg" alt=""></p>
+</li>
+<li><p><em>网络层首部: 首部检验和</em></p>
+<pre><code>1. 16位
+2. 用于检查首部是否有错误
+</code></pre></li>
+</ul>
+<hr>
+<hr>
+<hr>
+<h3 id="6">6. 传输层</h3>
+
+<ul>
+<li><p>协议</p>
+<pre><code>1. TCP: Transmiss Control Protocol, 传输控制协议
+2. UDP: User Datagram Protocol, 用户数据报协议
+</code></pre><p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_15-07-15.jpg" alt=""></p>
+</li>
+</ul>
+<h5 id="6.1">6.1 UDP协议</h5>
+
+<ul>
+<li>UDP是无连接的,减少了建立和释放连接的开销</li>
+<li>不保证可靠传输(因此不需要首部维护一些<em>复杂参数</em>)</li>
+<li><p>首部只有<strong>8个字节</strong><br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_15-14-52.jpg" alt=""></p>
+<ul>
+<li><p><em>UDP长度</em></p>
+<pre><code>1. 2字节,16位
+2. 首部的长度+数据的长度
+</code></pre></li>
+<li><p><em>UDP检验和</em></p>
+<pre><code>1. 检验和的计算内容: 伪首部 + 首部 + 数据
+2. 伪首部: 只在计算检验和起作用,并不会传递给网络层
+</code></pre><p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_15-18-25.jpg" alt=""> </p>
+</li>
+<li><p>_端口_</p>
+<pre><code>1. 2个字节.取值范围: 0 - 65535
+2. 客户端的源端口是临时开启的随机端口(不同协议有不同默认端口号)
+3. HTTP协议默认端口是80; HTTPS协议默认端口是443            
+</code></pre><p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_15-23-44.jpg" alt="">        </p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="6.2">6.2 TCP首部</h5>
+
+<ul>
+<li>首部长度是: <strong>20-60字节</strong></li>
+</ul>
+<p><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_15-27-36.jpg" alt=""></p>
+<ul>
+<li><p><em>首部: 数据偏移(Data offset)</em></p>
+<pre><code>1. 4位,取值范围是0x0101-0x1111
+2. 数据偏移的值乘以 4 是首部的实际长度
+3. 首部的长度20-60字节
+</code></pre><ul>
+<li><p><strong>问题1: UDP首部有16位字段记录UDP报文段的长度(首部+数据);TCP首部仅4位偏移量字段记录了TCP报文段的首部长度,并未记录TCP报文段的数据长度?</strong></p>
+<pre><code>1. UDP中的16位记录UDP长度的字段是冗余的,纯粹是为了保证首部是32位对齐
+2. TCP/UDP的数据长度,可以由IP数据包的首部推测出来: 传输层的数据长度 = 网络层的总长度 - 网络层首部的长度 - 传输层的首部长度
+</code></pre></li>
+</ul>
+</li>
+<li><p><em>首部: 保留(Reserved)</em></p>
+<pre><code>1. 6位,目前都是0
+2. 部分资料中,TCP首部的保留字段占3位,标志字段占9位
+</code></pre></li>
+<li><p><em>首部: 检验和(Checksum)</em></p>
+<pre><code>1. 和UDP一致,TCP检验和的计算内容: 伪首部 + 首部 + 数据
+2. 伪首部: 占用12字节,不会传递给网络层
+</code></pre></li>
+<li><p><em>首部: 标志位(Flags)</em></p>
+<ul>
+<li><p>URG(Urgent)</p>
+<pre><code>1. 当URG=1时,紧急指针字段才有效,表明当前报文段中有紧急数据,应优先尽快传送
+</code></pre></li>
+<li><p>ACK(Acknowledgment)</p>
+<pre><code>1. 当ACK=1时,确认号字段才有效
+</code></pre></li>
+<li><p>PSH(Push)</p>
+</li>
+<li><p>RST(Reset)</p>
+<pre><code>1. 当RST=1时,表明连接中出现了差错,需要释放连接,再重新建立连接
+</code></pre></li>
+<li><p>SYN(Synchronization)</p>
+<pre><code>1. 当SYN=1,ACK=0时,表明这是一个建立连接的请求
+2. 若对方同意建立连接,则返回SYN=1,ACK=1
+</code></pre></li>
+<li><p>FIN(Finish)</p>
+<pre><code>1. 当FIN=1时,表明数据已经发送完毕,要求释放连接
+</code></pre></li>
+</ul>
+</li>
+<li><p><em>首部: 需要(Sequence Number)</em></p>
+<pre><code>1. 占4个字节
+2. 建立连接后,序号代表,这一次传给对方的TCP数据部分的第一个字节的编号
+</code></pre></li>
+<li><p><em>首部: 确认号(Acknowledge Number)</em></p>
+<pre><code>1. 占4个字节
+2. 建立连接后,确认好代表,期望对方下一次传的TCP数据部分的第一个字节的编号
+</code></pre></li>
+<li><p><em>窗口: (Window)</em></p>
+<pre><code>1. 占2个字节
+2. 流量控制功能,告知对方下一次发送的数据的上限(单位为字节)
+</code></pre></li>
+<li><p><em>序号,确认号</em></p>
+<pre><code>1. 建立连接时,接收方的确认ack为发送方的seq+1
+</code></pre><p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_18-52-52.jpg" alt=""><br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_18-53-02.jpg" alt=""><br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_18-53-45.jpg" alt=""><br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_18-53-53.jpg" alt=""><br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_18-54-44.jpg" alt=""></p>
+</li>
+</ul>
+<hr>
+<h5 id="6.3">6.3 TCP:可靠传输</h5>
+
+<ul>
+<li><p><em>停止等待ARQ协议</em></p>
+<pre><code>1. ARQ: automatic repeat-request, 自动重传请求
+2. 包如果重传了多次没有收到确认,还是失败,不会一直重传,会根据系统设置,重传多次后未成功就发送reset报文(RST)断开TCP连接
+</code></pre></li>
+</ul>
+<pre><code>![](https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_16-17-39.jpg)
+
+![](https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_16-17-52.jpg)
+</code></pre><ul>
+<li><p><em>连续ARQ协议 + 滑动窗口协议</em></p>
+<pre><code>1. 停止等待ARQ协议: 发送一个分组就停止发送等待确认
+2. 连续ARQ协议和滑动窗口协议: 发送窗口中的分组连续发送完后,停止等待确认
+</code></pre><ul>
+<li><p><strong>问题1: 如果接受放最多接受4个包,但发送方只发了2个包,接收方如何确定后面还有没有剩余两个包?</strong></p>
+<pre><code>1. 接受方仔等待一段时候后没有收到第三个包
+2. 就会返回确认收到的2个包给发送方
+</code></pre></li>
+</ul>
+</li>
+<li><p><em>SACK选择性确认</em></p>
+<pre><code>1. 在TCP通信过程中,如果发送序列中(1,2,3,4)某个数据包丢失,比如3丢失
+2. TCP会根据重传最后确认的分组后续的分组(最后确认的是2,会重传3,4)
+3. 这样原来已经正确传输的分组比如分组4也会重新发送,降低了TCP性能
+</code></pre><ul>
+<li>为了解决上述问题, 发展出了SACK(Selective acknowledgment)选择性确认技术</li>
+<li><strong>告诉发送方哪些数据丢失,哪些数据已经提前得到</strong></li>
+<li><strong>使TCP只需要重新发送丢失的包,而不需要重新发送丢失的包后面的所有分组序列</strong></li>
+<li><p><strong>SACK信息会放在TCP首部的选项部分</strong></p>
+<pre><code>1. Kind,1字节,值为5表示SACK选项
+2. Length,1字节
+3. Left Edge,4字节,左边界
+4. Right Edge,4字节,右边界
+</code></pre><p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_16-45-59.jpg" alt=""><br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_16-46-31.jpg" alt=""></p>
+</li>
+<li><p>一对边界占用8个字节,由于<strong>TCP首部的选项部分最多40字节</strong></p>
+<pre><code>1. SACK选项最多携带4组边界信息
+2. SACK选项最多占用字节数 4*8 + 2 = 34
+</code></pre></li>
+<li><p><strong>问题: 为什么要在传输层就将数据分成多组,而不是等到网络层再分片传递给数据链路层?</strong></p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>1. 可以提高重传性能
+2. 可靠传输是在传输层进行控制的
+3. 如果传输层不分段,一旦数据丢失,整个传输层的数据都需要重传
+4. 如果传输层分了段,一旦数据丢失,只需要重传丢失部分即可
+</code></pre><hr>
+<h5 id="6.4">6.4 TCP:流量控制</h5>
+
+<ul>
+<li><p>目的:</p>
+<pre><code>1. 接收方缓存区已满,发送方还在发送数据
+2. 接收方只能吧接收到的数据包丢掉,大量丢包会造成网络资源浪费
+3. 因此需要进行流量控制
+</code></pre></li>
+<li><p>什么是流量控制: <strong>让发送方的发送速率不要太快,让接收方来得及接收处理</strong></p>
+</li>
+<li><p>原理</p>
+<pre><code>1. 确认报文中窗口字段来控制发送方的发送速率
+2. 发送方的发送窗口不能大于接收方的接收窗口
+3. 发送方接收到的窗口大小为0时,发送方停止发送数据
+</code></pre></li>
+<li><p>特殊情况</p>
+<pre><code>1. 建立连接后,接收方给发送方发送了窗口为0的报文段,但是后续接收方有了存储空间,给发送方发送了窗口非0的报文丢失了,发送方因为接收窗口为0,无法发送数据,如何解决? 
+</code></pre><blockquote>
+<p>解决方案: 1. 发送方收到0窗口报文时,停止发送报文;</p>
+<ol start="2">
+<li>同时开启一个定时器,一定间隔下会发测试报文去询问接收方最新的窗口大小;</li>
+<li>如果接收方窗口仍为0,会再次刷新定时器;</li>
+</ol>
+</blockquote>
+</li>
+<li><p><em>点对点的通信控制</em></p>
+</li>
+</ul>
+<hr>
+<h5 id="6.5">6.5 TCP:拥塞控制</h5>
+
+<ul>
+<li><p>目的</p>
+<pre><code>1. 防止过多的数据注入网络中
+2. 防止互联网中的路由器和链路过载
+</code></pre></li>
+<li><p>拥塞控制是一个全局性的控制</p>
+<pre><code>1. 涉及到所有主机和路由器以及降低网络传输性能有关的因素
+</code></pre></li>
+<li><p>方法</p>
+<ul>
+<li><p>专有名词</p>
+<pre><code>1. MSS(Maximum Segment Size),每个段最大的数据部分大小,在建立连接是确定
+2. cwnd(congestion window),拥塞窗口
+3. rwnd(receive window),接收窗口
+4. swnd(send window),发送窗口,swnd=min(cwnd,rwnd)
+5. 当rwnd&lt;cwnd,是接收方接收能力限制了发送窗口的最大值
+6. 当cwnd&lt;rwnd,是网络的拥塞限制了发送窗口的最大值
+</code></pre></li>
+<li><p><em>慢开始(slow start)</em></p>
+</li>
+<li><em>拥塞避免(congestion avoidance)</em></li>
+<li><em>快速重传(fast retransmit)</em></li>
+<li><em>快速恢复(fast recovery)</em></li>
+</ul>
+</li>
+<li><p><em>慢开始(slow start)</em></p>
+<blockquote>
+<p>cwnd初始值较小,随着数据包被接收方确认后,cwnd<strong>指数增长</strong></p>
+</blockquote>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_17-20-40.jpg" alt=""><br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_17-20-52.jpg" alt=""></p>
+</li>
+<li><p><em>拥塞避免(congestion avoidance)</em></p>
+<ul>
+<li><strong>ssthresh(slow start threshold): 慢开始阀值,cwnd达到阀值后,已线性增加窗口</strong></li>
+<li><strong>拥塞窗口缓慢增大(加法增大),以防止网络过早出现拥塞</strong></li>
+<li>只要网络出现拥塞,把ssthresh_减为拥塞峰值的一半,同时执行慢开始算法(cwnd,恢复为原有的初始值)_</li>
+<li><p>网络出现频繁拥塞时,ssthresh值就下降的很快</p>
+<p><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_17-33-00.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p><em>快速重传(fast retransmit)</em></p>
+<ul>
+<li><p>接收方</p>
+<ol>
+<li>收到一个失序的分组就立即发出重复确认</li>
+<li>让发送方即使知道有分组没有到达,不要等待到下一次自己发送数据才确认</li>
+</ol>
+</li>
+<li><p>发送发</p>
+<ol>
+<li>连续收到三个重复确认(共四个),立即重传接收方未收到的报文段</li>
+<li>不需要等待计时器重传到期后再重传</li>
+</ol>
+</li>
+</ul>
+<p><img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_18-34-07.jpg" alt=""></p>
+</li>
+<li><p><em>快速恢复(fast recovery)</em></p>
+<pre><code>1. 发送方连续收到三个重复确认,说明网络出现拥塞;执行乘法减小算法,把ssthresh减为拥塞峰值的一半
+2. 与慢开始不同是,cwnd不恢复到初始值;而是将cwnd值设为新的ssthresh值,再开始将拥塞窗口缓慢的线性增大
+</code></pre></li>
+<li><p><em>快重传+快恢复</em></p>
+<pre><code>1. 当执行拥塞乘法减小后,不重新开始慢开始,拥塞避免等方式;
+2. 而是降低ssthresh,继续执行拥塞避免,线性增加cwnd
+</code></pre><p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_18-41-01.jpg" alt=""></p>
+</li>
+</ul>
+<hr>
+<h5 id="6.6">6.6 TCP:建立连接</h5>
+
+<ul>
+<li><strong>3次握手</strong></li>
+<li><p>流程</p>
+<p>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-17_19-04-58.jpg" alt=""></p>
+</li>
+<li><p><strong>状态</strong></p>
+<ul>
+<li><em>CLOSED</em>: client处于_关闭_状态</li>
+<li><em>LISTEN</em>: server处于_监听_状态,等待client连接</li>
+<li><em>SYN-RCVD</em>: 表示server接收到了SYN报文,当收到client的ACK报文后,会进入到<em>ESTABLISH</em>状态</li>
+<li><em>SYN-SENT</em>: 表示client已发送SYN报文,等待server的二次握手</li>
+<li>_ _ESTABLISH__: 表示连接已建立</li>
+</ul>
+</li>
+<li><p>前两次握手的特点</p>
+<pre><code>1. SYN都设置为1
+2. 数据部分长度都为0
+3. TCP头部长度一般是32字节,头部固定20字节 / 选项部分12字节
+4. 双方会交换一些信息(比如MSS,是否支持SACK,WindowScale窗口缩放系数等),这些数据都放在TCP头部选项中
+5. 头部选项部分占用12字节
+</code></pre></li>
+<li><p><strong>问题1: 2次握手是否可行?为什么一定要3次握手</strong></p>
+<pre><code>1. 3次的目的是: 防止server一直等待,浪费资源
+2. 如果只需要2次握手,会出现如下情况
+    2.1 假设client发出第一个连接请求报文段,因为延迟,在连接释放后才到达server
+    2.2 本来是一个早已失效的连接请求,但是server收到此失效的请求后,误认为是client再次发出一个新的连接请求
+    2.3 server就像client发出确认报文段,同意建立连接
+    2.4 如果只采用2次握手,那么server发出确认,既建立连接
+    2.5 由于此时client并没有真正想连接服务器,不会给server发送数据
+    2.6 但是server已经建立新的连接,一直在等待celient发数据,造成server资源浪费
+
+3. 采用2次握手就可以防止上述现象
+    3.1 client收到确认后不向server发出确认,server因为收不到确认,就知道client并没有要求建立连接
+</code></pre></li>
+<li><p><strong>问题2: 第3次握手失败了,会怎么处理</strong></p>
+<pre><code>1. 此时server的状态为SYN-RCVD,若等不到client的ACK,server会重新发送SYN=1,ACK=1包
+2. 如果server多次重发SYN=1,ACK=1的包,但是未收到client的ACK,会发送RST包,强制关闭连接
+</code></pre></li>
+</ul>
+<hr>
+<h5 id="6.7">6.7 TCP:释放连接</h5>
+
+<ul>
+<li><strong>4次挥手</strong></li>
+<li><p>流程<br>  <img src="https://forbloghexo-1258063746.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/Xnip2021-02-18_00-50-26.jpg" alt=""></p>
+</li>
+<li><p><strong>状态</strong></p>
+<ul>
+<li><em>FIN-WAIT-1</em>: 表示想主动关闭连接,向对方发送FIN报文,进入到FIN-WAIT-1状态</li>
+<li><em>CLOSE-WAIT</em>: 表示在等待关闭<ul>
+<li>当对方发送FIN给自己,自己会回应一个ACK报文给对方,此时进入到<strong>CLOSE-WAIT</strong>状态</li>
+<li>在此状态下,检查考虑是否还有数据需要发送给对方,如果没有,发送<strong>FIN报文给对方</strong></li>
+</ul>
+</li>
+<li><em>FIN-WAIT-2</em>: 收到对方的ACK确认报文后,主动断开连接方会进入到<strong>FIN-WAIT-2状态,然后等待对方发送FIN报文</strong></li>
+<li><em>CLOSING</em>: 一种例外状态<ul>
+<li>当你发送FIN报文时,未收到对方的ACK报文,反而受到对方的<strong>FIN报文</strong></li>
+<li>双方几乎同时准备关闭连接,就出现了同时发送FIN报文的情况</li>
+<li>会出现CLOSING状态</li>
+<li>表示<strong>双方都正在关闭连接</strong></li>
+</ul>
+</li>
+<li><p><em>LAST-ACk</em>: 被动关闭方发送FIN报文后,等待对方的ACK报文</p>
+<ul>
+<li>当收到ACK报文后,会进入CLOSED状态</li>
+</ul>
+</li>
+<li><p>_TIME_WAIT_: <strong>表示收到对方的FIN报文,并发送了ACK报文,就等2MSL后进入CLOSED状态</strong></p>
+<ul>
+<li>如果<em>FIN-WAIT-1</em>状态下,收到了对方同时带有<strong>FIN和ACK标志的报文</strong></li>
+<li>可以直接进入到TIME-WAIT状态,无需进入到FIN-WAIT-2</li>
+</ul>
+</li>
+<li><p><em>CLOSED</em>: 关闭状态</p>
+</li>
+<li><p>部分状态比较短暂,例如: _SYN_RCVD_, <em>FIN-WAIT-1</em></p>
+</li>
+</ul>
+</li>
+<li><p>TCP/IP协议涉及允许<strong>任何一方先发起断开连接</strong></p>
+</li>
+<li><p>Client(主动断开方),需要个TIME-WAIT状态,等待一段时间后,在真正关闭连接</p>
+<ul>
+<li>一般是2MSL(maximum segment lifetime),最大分段生存期</li>
+<li>MSL: <strong>TCP报文在Internet的最长生存时间</strong></li>
+<li>每个具体的TCP实现都需要一个确定的MSL值,官方建议是2mins</li>
+<li>可以防止本次连接产生的数据包误传到下一次连接中</li>
+<li>如果主动断开方发送ACK后立刻释放了,如果因为网络原因被动断开方未收到ACK,server会重发FIN造成一定问题</li>
+</ul>
+</li>
+<li><p><strong>问题1: 为什么释放连接的时候吗,要进行4次挥手</strong></p>
+<ul>
+<li>TCP是全双工模式</li>
+<li><p>第一次挥手: <em>主机1发出FIN报文段</em></p>
+<pre><code>1. 主机1发出FIN报文段时,表示主机1告诉主机2,主机1已经没有数据需要发送了,但是主机1还是能接受主机2发送的数据
+</code></pre></li>
+<li><p>第二次挥手: <em>主机2返回ACK报文段</em></p>
+<pre><code>1. 表明主机2已经知道主机1没有数据发送了,但是主机2还是可以发送数据到主机1 
+</code></pre></li>
+<li><p>第三次挥手: <em>主机2发送FIN报文段</em></p>
+<pre><code>1. 表明主机2告诉主机1,主机2已经没有数据需要发送了
+</code></pre></li>
+<li><p>第四次挥手: <em>主机1返回ACk报文段</em></p>
+<pre><code>1. 表明主机1已经知道主机2没有数据发送了,随后正式断开整个TCP连接
+</code></pre></li>
+</ul>
+</li>
+<li><p><strong>问题2: 为什么抓包有时只能看到3次挥手</strong></p>
+<pre><code>1. 因为: 第二次和第三次挥手合并
+2. 当被动断开方接收到主动断开方的FIN时,此时无数据发送了
+3. 会将2&amp;3次挥手合并,告诉主动断开方: 已经知道断开方已经没有数据要发了,且自己也没有数据要发送了
+</code></pre></li>
+</ul>
+<hr>
+<hr>
+<hr>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/04/14/《炒股的智慧》书摘/" rel="next" title="《炒股的智慧》书摘">
+                <i class="fa fa-chevron-left"></i> 《炒股的智慧》书摘
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/blackCat.png"
+                alt="LiuXiao" />
+            
+              <p class="site-author-name" itemprop="name">LiuXiao</p>
+              <p class="site-description motion-element" itemprop="description">An iOS programmer, a blog chronicling the life and learning process, content with learning , think , life snippets , cats and you</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#目录"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1"><span class="nav-number">2.</span> <span class="nav-text">1. 基本介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1.1"><span class="nav-number">2.0.1.</span> <span class="nav-text">1.1 网络互连模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1.2"><span class="nav-number">2.0.2.</span> <span class="nav-text">1.2 同一网段,同一广播域计算机连接方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1.3"><span class="nav-number">2.0.3.</span> <span class="nav-text">1.3 不同网段,不同广播域计算机连接方式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2"><span class="nav-number">3.</span> <span class="nav-text">2. MAC地址 &amp; IP地址</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2.1"><span class="nav-number">3.0.1.</span> <span class="nav-text">2.1 MAC地址</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2.2"><span class="nav-number">3.0.2.</span> <span class="nav-text">2.2 IP地址</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#2-2-1-IP地址分类"><span class="nav-number">3.0.2.1.</span> <span class="nav-text">2.2.1 IP地址分类</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2.3"><span class="nav-number">3.0.3.</span> <span class="nav-text">2.3 子网掩码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3"><span class="nav-number">4.</span> <span class="nav-text">3. 路由</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3.1"><span class="nav-number">4.0.1.</span> <span class="nav-text">3.1 概念</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3.2"><span class="nav-number">4.0.2.</span> <span class="nav-text">3.2 公网IP&amp;私网IP</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4"><span class="nav-number">5.</span> <span class="nav-text">4. 物理层和数据链路层</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4.1"><span class="nav-number">5.0.1.</span> <span class="nav-text">4.1 物理层</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4.2"><span class="nav-number">5.0.2.</span> <span class="nav-text">4.2 数据链路层</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5"><span class="nav-number">6.</span> <span class="nav-text">5. 网络层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6"><span class="nav-number">7.</span> <span class="nav-text">6. 传输层</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#6.1"><span class="nav-number">7.0.1.</span> <span class="nav-text">6.1 UDP协议</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6.2"><span class="nav-number">7.0.2.</span> <span class="nav-text">6.2 TCP首部</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6.3"><span class="nav-number">7.0.3.</span> <span class="nav-text">6.3 TCP:可靠传输</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6.4"><span class="nav-number">7.0.4.</span> <span class="nav-text">6.4 TCP:流量控制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6.5"><span class="nav-number">7.0.5.</span> <span class="nav-text">6.5 TCP:拥塞控制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6.6"><span class="nav-number">7.0.6.</span> <span class="nav-text">6.6 TCP:建立连接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6.7"><span class="nav-number">7.0.7.</span> <span class="nav-text">6.7 TCP:释放连接</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LiuXiao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
